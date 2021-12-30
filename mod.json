@@ -4,7 +4,7 @@
     "name": "OMORI Debug Console",
     "description": "OMORI Debug Console",
     "manifestVersion": 1,
-    "version": "0.1.0",
+    "version": "0.1.1",
     "files": {
         "plugins": [
             "CommandHandler.js",

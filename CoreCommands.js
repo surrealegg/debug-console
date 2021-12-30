@@ -190,6 +190,92 @@ CommandHandler.add("endbattle", handler => {
     BattleManager.endBattle();
 });
 
+let tempSceneBaseInitialize = Scene_Base.prototype.initialize;
+Scene_Base.prototype.initialize = function () {
+    tempSceneBaseInitialize.call(this);
+    this._isTeleporting = false;
+};
+
+let tempSceneMapUpdateMain = Scene_Map.prototype.updateMain;
+Scene_Map.prototype.updateMain = function () {
+    if (this._isTeleporting) {
+        $gameScreen.update();
+        return;
+    }
+    tempSceneMapUpdateMain.call(this);
+}
+
+class TeleportScene extends Scene_Map {
+
+    /**
+     * Extending createDisplayObjects by enabling
+     * Teleport flag and moving player in the middle.
+     *
+     * @returns {void}
+     */
+    createDisplayObjects() {
+        super.createDisplayObjects();
+
+        this._isTeleporting = true;
+        $gamePlayer.locate(Math.floor($dataMap.width / 2), Math.floor($dataMap.height / 2));
+    }
+
+    /**
+     * Extending Scene_Map by handling Inputs
+     *
+     * @returns {void}
+     */
+    update() {
+        super.update();
+        if (Input.isRepeated("up")) {
+            this.movePlayer(0, -1);
+            return;
+        }
+        if (Input.isRepeated("down")) {
+            this.movePlayer(0, 1);
+            return;
+        }
+        if (Input.isRepeated("left")) {
+            this.movePlayer(-1, 0);
+            return;
+        }
+        if (Input.isRepeated("right")) {
+            this.movePlayer(1, 0);
+            return;
+        }
+        if (Input.isTriggered("ok")) {
+            SoundManager.playOk();
+            SceneManager.push(Scene_Map);
+            this._isTeleporting = false;
+            return;
+        }
+        if (Input.isTriggered("cancel")) {
+            SoundManager.playCancel();
+            let x = $gameTemp._previousTeleportX;
+            let y = $gameTemp._previousTeleportY;
+            let mapId = $gameTemp._previousTeleportMap;
+            $gamePlayer.reserveTransfer(mapId, x, y, 2, 0);
+            SceneManager.push(Scene_Map);
+            this._isTeleporting = false;
+        }
+    }
+
+    /**
+     * Moves player to the specific position.
+     *
+     * @param {number} x
+     * @param {number} y
+     *
+     * @returns {void}
+     */
+    movePlayer(x, y) {
+        SoundManager.playCursor();
+        let dx = ($gamePlayer.x + x).clamp(0, $dataMap.width - 1);
+        let dy = ($gamePlayer.y + y).clamp(0, $dataMap.height - 1);
+        $gamePlayer.locate(dx, dy);
+    }
+};
+
 CommandHandler.add("maptp", (handler, args) => {
 
     // Check if argument passed
@@ -213,17 +299,27 @@ CommandHandler.add("maptp", (handler, args) => {
 
     // Check if map exists as file.
     const fs = require("fs");
-    if (!fs.existsSync(`./maps/Map${map.id}.json`)) {
+    if (!Utils.isOptionValid("test")) {
+        // FIXME: process.mainModule.filename is deprecated.
+        let base = path.dirname(process.mainModule.filename);
+        if (!fs.existsSync(`${base}/maps/map${map.id}.AUBREY`)) {
+            handler.log(
+                `Could not teleport to "${map.name}", because ${base}/maps/map${map.id}.AUBREY is missing.`,
+                "red"
+            );
+            return;
+        }
+    } else if (!fs.existsSync(`./maps/Map${map.id}.json`)) {
         handler.log(`Could not teleport to "${map.name}", because ./maps/Map${map.id}.json is missing.`, "red");
         return;
     }
 
     // Teleports to id
     handler.log(`Teleporting to "${map.name}"`);
-    $gameTemp._preDebugTeleportX = $gamePlayer.x;
-    $gameTemp._preDebugTeleportY = $gamePlayer.y;
-    $gameTemp._preDebugTeleportMap = $gameMap.mapId();
-    SceneManager.push(Scene_MapTeleport);
+    $gameTemp._previousTeleportX = $gamePlayer.x;
+    $gameTemp._previousTeleportY = $gamePlayer.y;
+    $gameTemp._previousTeleportMap = $gameMap.mapId();
+    SceneManager.push(TeleportScene);
     $gamePlayer.reserveTransfer(map.id, 0, 0, 2, 0);
     $gamePlayer.requestMapReload();
 

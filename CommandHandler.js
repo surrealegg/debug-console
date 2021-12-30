@@ -190,19 +190,6 @@ class CommandHandlerClass {
           margin-bottom: 0.5rem;
         }
 
-        .console ul::-webkit-scrollbar-track {
-          background-color: rgba(0, 0, 0, 0.2);
-        }
-
-        .console ul::-webkit-scrollbar {
-          width: 1em;
-        }
-
-        .console ul::-webkit-scrollbar-thumb {
-          background-color: darkgrey;
-          outline: 1px solid slategrey;
-        }
-
         .console li {
           margin-bottom: 0.25rem;
         }
