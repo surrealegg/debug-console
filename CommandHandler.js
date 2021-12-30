@@ -1,43 +1,77 @@
 /**!
  * @author surrealegg
- * @plugdesc A command handler
+ * @plugdesc OMORI Console
  *
  * @help
  *
  */
 
+/**
+ * @global
+ */
 class CommandHandlerClass {
   constructor() {
     let self = this;
 
     /**
-     * @var {Array<(handler: CommandHandlerClass, arguments: string[]) => void>}
+     * @type {Array<(handler: CommandHandlerClass, arguments: string[]) => void>}
      */
     this.commands = {};
 
     /**
-     * @var {Array<(arguments: string[]) => string[]>}
+     * @type {Array<(arguments: string[]) => string[]>}
      */
     this.suggestions = {};
 
     /**
-     * @var {string[]}
+     * @type {string[]}
      */
     this.history = [""];
+
+    /**
+     * @type {number}
+     */
     this.history_index = 0;
 
     /**
-     * @var {string[]}
+     * @type {string[]}
      */
     this.currentSuggestions = [];
     this.currentSuggestionsIndex = -1;
 
-    // DOM Elements
+    /**
+     * @type {HTMLDivElement}
+     */
     this.consoleElement = document.createElement("div");
+
+    /**
+     * @type {HTMLUListElement}
+     */
     this.listElement = document.createElement("ul");
+
+    /**
+     * @type {HTMLDivElement}
+     */
     this.actionElement = document.createElement("div");
+
+    /**
+     * @type {HTMLDivElement}
+     */
+    this.scrollableElement = document.createElement("div");
+
+    /**
+     * @type {HTMLSpanElement}
+     */
     this.actionInputPrefixElement = document.createElement("span");
+
+    /**
+     * @type {HTMLParagraphElement}
+     */
     this.actionSuggestionElement = document.createElement("p");
+
+    /**
+     * @type {HTMLInputElement}
+     */
     this.actionInputElement = document.createElement("input");
 
     // Overwrite preventDefaults, because it cancles out input events.
@@ -47,31 +81,39 @@ class CommandHandlerClass {
 
     // Set attributes
     this.actionInputPrefixElement.innerText = "/";
-    this.consoleElement.classList.add("surrealegg_console");
+    this.consoleElement.classList.add("console");
     this.actionElement.classList.add("action");
+    this.scrollableElement.classList.add("scrollable");
     this.actionInputElement.setAttribute("type", "text");
     this.actionInputElement.setAttribute("id", "console_input");
+
+    // Add events
     this.actionInputElement.addEventListener("keydown", e => {
       switch (e.code) {
         case "Enter":
+          e.preventDefault();
           if (e.target.value.length > 0) {
             self.log(`/${e.target.value}`, "lightgray");
             self.execute(e.target.value);
             self.history.splice(self.history.length - 1, 0, e.target.value);
-            self.history_index++;
+            self.history_index = self.history.length - 1;
             e.target.value = "";
           }
           break;
         case "ArrowUp":
+          e.preventDefault();
           if (self.history_index > 0) {
             self.history_index--;
             e.target.value = self.history[self.history_index];
+            e.target.selectionStart = e.target.selectionEnd = e.target.value.length;
           }
           break;
         case "ArrowDown":
+          e.preventDefault();
           if (self.history_index < self.history.length - 1) {
             self.history_index++;
             e.target.value = self.history[self.history_index];
+            e.target.selectionStart = e.target.selectionEnd = e.target.value.length;
           }
           break;
         case "Tab":
@@ -84,45 +126,41 @@ class CommandHandlerClass {
             self.currentSuggestionsIndex = 0;
           }
           let temp = self.parseArguments(self.actionInputElement.value);
-          if (temp.length > 1) {
-            temp[temp.length - 1] = `"${self.currentSuggestions[self.currentSuggestionsIndex]}"`;
+          if (temp.length > 0) {
+            let tempValue = self.currentSuggestions[self.currentSuggestionsIndex];
+            temp[temp.length - 1] = tempValue;
+            for (let i = 0; i < temp.length; ++i) {
+              if (typeof temp[i] !== "undefined" && (temp[i].indexOf(" ") > -1 || temp[i].indexOf("/") > -1)) {
+                temp[i] = `"${temp[i]}"`;
+              }
+            }
             self.actionInputElement.value = temp.join(" ");
           }
           break;
       }
     });
-    this.actionInputElement.addEventListener("input", e => {
-      self.currentSuggestionsIndex = -1;
-      let args = self.parseArguments(e.target.value);
-      if (args.length > 1) {
-        if (args[0] in self.suggestions) {
-          self.currentSuggestions = self.suggestions[args[0]](args);
-          self.actionSuggestionElement.innerText = self.currentSuggestions.join(" ");
-        }
-        return;
-      }
-      self.actionSuggestionElement.innerText = "";
-      // TODO: Command suggestion.
-    });
+
+    this.actionInputElement.addEventListener("input", e => self.onInputUpdate(e.target.value));
 
     // Add Style
+    let cachedFont = localStorage.getItem("font") || "GameFont";
+    let cachedFontSize = localStorage.getItem("fontSize") || "1.5rem";
     let styleElement = document.createElement("style");
     styleElement.innerText = `
-        .surrealegg_console,
-        .surrealegg_console input {
-          font-family: GameFont;
-          font-size: 1.5rem;
-          line-height: 1;
+        .console,
+        .console input {
+          font-family: ${cachedFont};
+          font-size: ${cachedFontSize};
         }
 
-        .surrealegg_console {
+        .console {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
           height: 100%;
           background-color: rgba(0, 0, 0, 0.8);
-          z-index: 10;
+          z-index: 100;
           color: #fff;
           padding: 1rem;
           box-sizing: border-box;
@@ -131,7 +169,7 @@ class CommandHandlerClass {
           display: none;
         }
 
-        .surrealegg_console .action {
+        .console .action {
           display: flex;
           padding: 0.25em 0.5em;
           box-sizing: border-box;
@@ -140,15 +178,36 @@ class CommandHandlerClass {
           min-height: 3rem;
         }
 
-        .surrealegg_console ul {
+        .console ul {
           list-style-type: none;
           padding-left: 0;
           margin-top: 0.5rem;
           margin-bottom: 0.5rem;
-          overflow-y: auto;
         }
 
-        .surrealegg_console #console_input {
+        .console .scrollable {
+          overflow-y: auto;
+          margin-bottom: 0.5rem;
+        }
+
+        .console ul::-webkit-scrollbar-track {
+          background-color: rgba(0, 0, 0, 0.2);
+        }
+
+        .console ul::-webkit-scrollbar {
+          width: 1em;
+        }
+
+        .console ul::-webkit-scrollbar-thumb {
+          background-color: darkgrey;
+          outline: 1px solid slategrey;
+        }
+
+        .console li {
+          margin-bottom: 0.25rem;
+        }
+
+        .console #console_input {
           width: 100%;
           border: none;
           color: #fff;
@@ -160,43 +219,98 @@ class CommandHandlerClass {
           display: flex;
         }
 
-        .surrealegg_console p {
+        .console p {
           color: lightblue;
-          margin: 0;
+          margin: 0 0 12px 0;
         }
         `;
     document.head.appendChild(styleElement);
 
     // Add Toggle event.
     document.addEventListener("keydown", e => {
-      if (e.code === "Slash" || e.code === "Escape") {
+      if (e.code === "Escape" || (e.code === "Slash" && !self.consoleElement.classList.contains("show"))) {
         e.preventDefault();
         self.toggleConsole();
       }
     });
 
     // Add this to the body.
-    this.consoleElement.appendChild(this.listElement);
+    this.scrollableElement.appendChild(this.listElement);
+    this.scrollableElement.appendChild(this.actionSuggestionElement);
     this.actionElement.appendChild(this.actionInputPrefixElement);
     this.actionElement.appendChild(this.actionInputElement);
-    this.consoleElement.appendChild(this.actionSuggestionElement);
+    this.consoleElement.appendChild(this.scrollableElement);
     this.consoleElement.appendChild(this.actionElement);
     document.body.appendChild(this.consoleElement);
 
     // Add welcome message
-    this.log("Welcome to OMORI console.");
+    this.log("Welcome to OMORI console! Press ESC to close it");
+  }
+
+  /**
+   * Handles on Input event. This is used to show suggestions if possible.
+   *
+   * @param {string} value
+   * @returns {void}
+   */
+  onInputUpdate(value) {
+    this.currentSuggestionsIndex = -1;
+    this.actionSuggestionElement.innerText = "";
+    this.currentSuggestions = [];
+    let args = this.parseArguments(value);
+    if (args.length > 1) {
+      if (args[0] in this.suggestions) {
+        this.currentSuggestions = this.filterSuggestions(args[args.length - 1], this.suggestions[args[0]](args));
+        this.actionSuggestionElement.innerText = this.currentSuggestions.length > 0 ?
+          `"${this.currentSuggestions.join("\", \"")}"` : "";
+        this.scrollableElement.scrollTo(0, this.scrollableElement.scrollHeight);
+      }
+      return;
+    }
+    let commandNames = Object.keys(this.commands);
+    this.currentSuggestions = args.length === 1 ? this.filterSuggestions(args[0], commandNames) : commandNames;
+    this.actionSuggestionElement.innerText = this.currentSuggestions.join(" ");
+    this.scrollableElement.scrollTo(0, this.scrollableElement.scrollHeight);
+  }
+
+  /**
+   * Updates the console status
+   *
+   * @returns {void}
+   */
+  updateConsole() {
+    if (this.consoleElement.classList.contains("show")) {
+      SceneManager.stop();
+      this.actionInputElement.focus();
+      this.onInputUpdate(this.actionInputElement.value);
+      return;
+    }
+    SceneManager.resume();
   }
 
   /**
    * Toggles the console.
+   *
+   * @returns {void}
    */
   toggleConsole() {
-    // TODO: Pause the game if console is shown.
     this.consoleElement.classList.toggle("show");
-    if (this.consoleElement.classList.contains("show")) {
-      this.actionInputElement.focus();
-      return;
+    this.updateConsole();
+  }
+
+  /**
+   * Sets the console to specified state.
+   *
+   * @param {boolean} value
+   */
+  setConsole(value) {
+    if (value === true) {
+      this.consoleElement.classList.add("show");
     }
+    else {
+      this.consoleElement.classList.remove("show");
+    }
+    this.updateConsole();
   }
 
   /**
@@ -204,6 +318,8 @@ class CommandHandlerClass {
    *
    * @param {string} value
    * @param {string} color
+   *
+   * @returns {void}
    */
   log(value, color = "#fff") {
     let tempElement = document.createElement("li");
@@ -212,7 +328,7 @@ class CommandHandlerClass {
       tempElement.style.color = color;
     }
     this.listElement.appendChild(tempElement);
-    this.listElement.scrollTo(0, this.listElement.scrollHeight);
+    this.scrollableElement.scrollTo(0, this.scrollableElement.scrollHeight);
   }
 
   /**
@@ -221,17 +337,17 @@ class CommandHandlerClass {
    *
    * @param {string} name
    * @param {(handler: CommandHandlerClass, arguments: string[]) => void} callback
-   * @param {((handler: CommandHandlerClass, arguments: string[]) => string[])|null} suggestion
+   * @param {((arguments: string[]) => string[])|null} suggestions
    *
    * @returns {boolean}
    */
-  add(name, callback, suggestion = null) {
+  add(name, callback, suggestions = null) {
     if (name in this.commands) {
       return false;
     }
     this.commands[name] = callback;
-    if (suggestion !== null) {
-      this.suggestions[name] = suggestion;
+    if (suggestions !== null) {
+      this.suggestions[name] = suggestions;
     }
     return true;
   }
@@ -253,6 +369,9 @@ class CommandHandlerClass {
         args[i] = args[i].substring(1, args[i].length - endQuote);
       }
     }
+    if (input.charAt(input.length - 1) === " ") {
+      args.push("");
+    }
     return args;
   }
 
@@ -260,7 +379,7 @@ class CommandHandlerClass {
    * Parses and executes a command.
    *
    * @param {string} command
-   * @returns
+   * @returns {void}
    */
   execute(command) {
     let args = this.parseArguments(command);
@@ -272,10 +391,32 @@ class CommandHandlerClass {
     this.actionSuggestionElement.innerText = "";
     this.currentSuggestions = {};
     this.currentSuggestionsIndex = -1;
+    this.onInputUpdate("");
+  }
+
+  /**
+   * Filters the results by query.
+   *
+   * @param {string} query
+   * @param {string[]} values
+   * @returns {string[]}
+   */
+  filterSuggestions(query, values) {
+    let result = [];
+
+    // Escape string
+    query = query.replace(/[.*+?^${}()|[\]\\\/]/g, "\\$&");
+    query = new RegExp(query, "i");
+    for (let i = 0; i < values.length; ++i) {
+      if (values[i].search(query) > -1) {
+        result.push(values[i]);
+      }
+    }
+    return result;
   }
 };
 
 /**
- * @var {CommandHandlerClass}
+ * @type {CommandHandlerClass}
  */
-window.CommandHandler = window.CommandHandler || new CommandHandlerClass;
+this.CommandHandler = this.CommandHandler || new CommandHandlerClass;

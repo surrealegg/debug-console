@@ -2,7 +2,7 @@
     "$schema": "https://rph.space/oneloader.manifestv1.schema.json",
     "id": "console",
     "name": "OMORI Debug Console",
-    "description": "Extendable OMORI Debug Console",
+    "description": "OMORI Debug Console",
     "manifestVersion": 1,
     "version": "0.1.0",
     "files": {

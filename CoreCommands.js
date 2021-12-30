@@ -1,64 +1,200 @@
-CommandHandler.add("help", (handler) => {
-    handler.log(`Commands: ${Object.keys(handler.commands).join(" ")}`, "lime");
-});
+
+/**
+ * @type {string[]|null}
+ */
+var namedMaps = null;
+
+/**
+ * @var {string[]|null}
+ */
+var namedTroops = null;
+
+/**
+ * @var {string[]}
+ */
+var supportedFonts = ["monospace", "sans-serif", "GameFont"];
 
 CommandHandler.add("clear", (handler) => {
-    handler.listElement.innerHTML = "";
+    while (handler.listElement.lastElementChild) {
+        handler.listElement.removeChild(handler.listElement.lastElementChild);
+    }
+});
+
+CommandHandler.add("reload", () => {
+    location.reload();
 });
 
 /**
  * Checks if map exists.
  *
+ * @param {Array<{name: string, id: number}} dest
  * @param {string} value
  * @returns {{name: string, id: number}|null}
  */
-function findMap(value) {
+function findFromVariable(dest, value) {
     let parsedValue = parseInt(value);
     let numeric = !isNaN(parsedValue) && isFinite(parsedValue);
-    for (let i = 0; i < $dataMapInfos.length; ++i) {
-        if ($dataMapInfos[i] === null) {
-            continue;
-        }
-        if ((numeric && parsedValue === $dataMapInfos[i].id) || $dataMapInfos[i].name === value) {
-            return $dataMapInfos[i];
+    for (let i = 0; i < dest.length; ++i) {
+        if (dest[i] !== null && ((numeric && parsedValue === dest[i].id) || dest[i].name === value)) {
+            return dest[i];
         }
     }
     return null;
 }
 
 /**
- * Get list of maps that match the query.
+ * Returns all map names.
  *
- * @param {string} value
- * @returns {Array<{name: string, id: number}>}
+ * @returns {string[]}
  */
-function findMatches(value) {
-    let parsedValue = parseInt(value);
-    let numeric = !isNaN(parsedValue) && isFinite(parsedValue);
+function getMapsbyName() {
+    /**
+     * @type {string[]}
+     */
     let result = [];
-
-    // Escape string
-    value = value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    value = new RegExp(value, "i");
     for (let i = 0; i < $dataMapInfos.length; ++i) {
-        if ($dataMapInfos[i] === null) {
-            continue;
-        }
-        if (numeric && parsedValue === $dataMapInfos[i].id) {
-            return [$dataMapInfos[i].name];
-        }
-        if ($dataMapInfos[i].name.search(value) > -1) {
+        if ($dataMapInfos[i] !== null) {
             result.push($dataMapInfos[i].name);
         }
     }
     return result;
 }
 
+/**
+ * Returns all Troops' names.
+ *
+ * @returns {string[]}
+ */
+function getTroopsByName() {
+    /**
+     * @type {string[]}
+     */
+    let result = [];
+    for (let i = 0; i < $dataTroops.length; ++i) {
+        if ($dataTroops[i] !== null && $dataTroops[i].members.length > 0) {
+            result.push($dataTroops[i].name);
+        }
+    }
+    return result;
+}
+
+CommandHandler.add("battle", (handler, args) => {
+
+    // Check if argument passed
+    if (args.length < 2) {
+        handler.log("Usage: /battle [id | name]");
+        return;
+    }
+
+    // Check if the player is in map
+    if (!SceneManager._scene._mapLoaded) {
+        handler.log("Player must be in map", "red");
+        return;
+    }
+
+    // Check if battle exists
+    let battle = findFromVariable($dataTroops, args[1]);
+    if (battle === null) {
+        handler.log(`Battle "${args[1]}" not found`, "red");
+        return;
+    }
+
+    handler.log(`Starting a battle with "${battle.name}"`);
+
+    // Closes console.
+    handler.setConsole(false);
+
+    // TODO: Give an option to set canEscape and canLose
+    SoundManager.playBattleStart();
+    BattleManager.setup(battle.id, true, true);
+    BattleManager.setEventCallback(() => {
+        // There's a bug where when you select Run
+        // You will see a black screen. This fixes the issue.
+        $gameScreen.clear();
+    });
+    $gamePlayer.makeEncounterCount();
+    SceneManager.push(Scene_Battle);
+
+}, args => {
+    if (args.length === 2) {
+        if (namedTroops === null) {
+            namedTroops = getTroopsByName();
+        }
+        return namedTroops;
+    }
+    return [];
+});
+
+CommandHandler.add("joinbattle", (handler, args) => {
+    if (!$gameParty.inBattle()) {
+        handler.log("Player must be in battle.", "red");
+        return;
+    }
+
+    // Check if battle exists
+    let battle = findFromVariable($dataTroops, args[1]);
+    if (battle === null) {
+        handler.log(`Battle "${args[1]}" not found`, "red");
+        return;
+    }
+
+    handler.log(`${battle.name} joined the battle!`);
+    $gameTroop.addTroopReinforcements(battle.id);
+
+}, args => {
+    if (args.length === 2) {
+        if (namedTroops === null) {
+            namedTroops = getTroopsByName();
+        }
+        return namedTroops;
+    }
+    return [];
+});
+
+CommandHandler.add("font", (handler, args) => {
+
+    // Check if argument passed
+    if (args.length < 2) {
+        handler.log("Usage: /font [font]");
+        return;
+    }
+
+    if (!supportedFonts.includes(args[1])) {
+        handler.log(`Unknown font ${args[1]}`, "red");
+        return;
+    }
+
+    handler.consoleElement.style.fontFamily = args[1];
+    handler.actionInputElement.style.fontFamily = args[1];
+
+    let fontSize = args[1] !== "GameFont" ? "1.125rem" : "1.5rem";
+    handler.consoleElement.style.fontSize = fontSize;
+    handler.actionInputElement.style.fontSize = fontSize;
+
+    localStorage.setItem("font", args[1]);
+    localStorage.setItem("fontSize", fontSize);
+
+}, args => {
+    if (args.length === 2) {
+        return supportedFonts;
+    }
+    return [];
+});
+
+CommandHandler.add("endbattle", handler => {
+    if (!$gameParty.inBattle()) {
+        handler.log("Player must be in battle.", "red");
+        return;
+    }
+    handler.toggleConsole();
+    BattleManager.endBattle();
+});
+
 CommandHandler.add("maptp", (handler, args) => {
 
     // Check if argument passed
     if (args.length < 2) {
-        handler.log("Usage /maptp [id | name]");
+        handler.log("Usage: /maptp [id | name]");
         return;
     }
 
@@ -69,7 +205,7 @@ CommandHandler.add("maptp", (handler, args) => {
     }
 
     // Check if map exists
-    let map = findMap(args[1]);
+    let map = findFromVariable($dataMapInfos, args[1]);
     if (map === null) {
         handler.log(`Map "${args[1]}" not found`, "red");
         return;
@@ -78,7 +214,7 @@ CommandHandler.add("maptp", (handler, args) => {
     // Check if map exists as file.
     const fs = require("fs");
     if (!fs.existsSync(`./maps/Map${map.id}.json`)) {
-        handler.log(`Could not teleport to "${map.name}".`, "red");
+        handler.log(`Could not teleport to "${map.name}", because ./maps/Map${map.id}.json is missing.`, "red");
         return;
     }
 
@@ -92,7 +228,7 @@ CommandHandler.add("maptp", (handler, args) => {
     $gamePlayer.requestMapReload();
 
     // Closes console.
-    handler.toggleConsole();
+    handler.setConsole(false);
 
     // Clears Effects.
     $gameScreen.clear();
@@ -109,6 +245,12 @@ CommandHandler.add("maptp", (handler, args) => {
     // Closes a Message, if it's open.
     SceneManager._scene._messageWindow.terminateMessage();
 
-}, (args) => {
-    return args.length > 1 ? findMatches(args[1]) : [];
+}, args => {
+    if (args.length === 2) {
+        if (namedMaps === null) {
+            namedMaps = getMapsbyName();
+        }
+        return namedMaps;
+    }
+    return [];
 });
