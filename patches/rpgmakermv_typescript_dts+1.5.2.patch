@@ -1,0 +1,36 @@
+diff --git a/node_modules/rpgmakermv_typescript_dts/typings/rpgmakermv/rpg_objects.d.ts b/node_modules/rpgmakermv_typescript_dts/typings/rpgmakermv/rpg_objects.d.ts
+index 5ff8274..3082b37 100644
+--- a/node_modules/rpgmakermv_typescript_dts/typings/rpgmakermv/rpg_objects.d.ts
++++ b/node_modules/rpgmakermv_typescript_dts/typings/rpgmakermv/rpg_objects.d.ts
+@@ -16,6 +16,9 @@ declare class Game_Temp {
+     _commonEventId: number;
+     _destinationX: number;
+     _destinationY: number;
++    _previousTeleportX: number;
++    _previousTeleportY: number;
++    _previousTeleportMap: number;
+ }
+ 
+ declare class Game_System {
+@@ -1178,6 +1181,7 @@ declare class Game_Troop extends Game_Unit {
+     goldTotal(): number;
+     goldRate(): number;
+     makeDropItems(): IDataItem[];
++    addTroopReinforcements(id: number): void;
+ }
+ 
+ declare class Game_Map {
+diff --git a/node_modules/rpgmakermv_typescript_dts/typings/rpgmakermv/rpg_scenes.d.ts b/node_modules/rpgmakermv_typescript_dts/typings/rpgmakermv/rpg_scenes.d.ts
+index f79ec5a..0cda5fe 100644
+--- a/node_modules/rpgmakermv_typescript_dts/typings/rpgmakermv/rpg_scenes.d.ts
++++ b/node_modules/rpgmakermv_typescript_dts/typings/rpgmakermv/rpg_scenes.d.ts
+@@ -5,6 +5,9 @@ declare class Scene_Base extends Stage {
+     _fadeSprite: ScreenSprite;
+     _windowLayer: WindowLayer;
+     _spriteset: Spriteset_Base;
++    _mapLoaded: boolean;
++    _messageWindow: Window_Message;
++    _isTeleporting: boolean;
+ 
+     constructor();
+     initialize(): void;

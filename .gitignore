@@ -1,1 +1,5 @@
 console.zip
+Utils.js
+node_modules
+dist
+yarn-error.log

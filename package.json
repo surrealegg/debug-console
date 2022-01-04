@@ -1,0 +1,21 @@
+{
+    "name": "rpgmaker-console",
+    "version": "0.2.0",
+    "description": "Debug Console for RPG Maker",
+    "main": "index.js",
+    "author": "surrealegg <surrealegg@pm.me>",
+    "license": "Apache License 2.0",
+    "private": false,
+    "scripts": {
+        "build": "esbuild src/main.ts --target=es6 --bundle --external:fs --external:path --external:nw.gui --outfile=dist/Plugin.js",
+        "postinstall": "patch-package"
+    },
+    "devDependencies": {
+        "@types/chrome": "^0.0.174",
+        "@types/node": "^17.0.7",
+        "esbuild": "^0.14.10",
+        "patch-package": "^6.4.7",
+        "prettier": "^2.5.1",
+        "rpgmakermv_typescript_dts": "git+https://github.com/surrealegg/rpgmakermv_typescript_dts.git"
+    }
+}

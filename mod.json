@@ -6,10 +6,7 @@
     "manifestVersion": 1,
     "version": "0.1.1",
     "files": {
-        "plugins": [
-            "CommandHandler.js",
-            "CoreCommands.js"
-        ]
+        "plugins": ["CommandHandler.js", "CoreCommands.js"]
     },
     "asyncExec": [
         {

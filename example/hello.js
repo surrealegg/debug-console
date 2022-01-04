@@ -1,10 +1,8 @@
-
-if (typeof CommandHandler !== "undefined") {
-
+if (typeof window.commands !== "undefined") {
     /**
      * Runs on Execute.
      *
-     * @param {CommandHandlerClass} handler
+     * @param {CommandHandler} handler
      * @param {string[]} args
      *
      * @returns {void}
@@ -44,8 +42,8 @@ if (typeof CommandHandler !== "undefined") {
     };
 
     // Add hello command without suggestion callback
-    // CommandHandler.add("hello", helloOnExecute);
+    // window.commands.add("hello", helloOnExecute);
 
     // Add hello command
-    CommandHandler.add("hello", helloOnCommand, helloOnSuggestion);
+    window.commands.add("hello", helloOnCommand, helloOnSuggestion);
 }
