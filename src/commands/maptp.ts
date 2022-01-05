@@ -1,4 +1,5 @@
 import path = require("path");
+import fs = require("fs");
 import CommandHandler from "../handler";
 
 let namedMaps: string[] | null = null;
@@ -21,13 +22,16 @@ Scene_Map.prototype.updateMain = function () {
 };
 
 function getMapsbyName(): string[] {
-    let result: string[] = [];
+    if (namedMaps !== null) {
+        return namedMaps;
+    }
+    namedMaps = [];
     for (let i = 0; i < $dataMapInfos.length; ++i) {
         if ($dataMapInfos[i] !== null) {
-            result.push($dataMapInfos[i].name);
+            namedMaps.push($dataMapInfos[i].name);
         }
     }
-    return result;
+    return namedMaps;
 }
 
 class TeleportScene extends Scene_Map {
@@ -37,7 +41,7 @@ class TeleportScene extends Scene_Map {
         this._isTeleporting = true;
         $gamePlayer.locate(
             Math.floor($dataMap.width / 2),
-            Math.floor($dataMap.height / 2)
+            Math.floor($dataMap.height / 2),
         );
     }
 
@@ -105,20 +109,21 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     }
 
     // Check if map exists as file.
-    const fs = require("fs");
     if (!Utils.isOptionValid("test")) {
-        const base = path.dirname(process.mainModule!.filename);
-        if (!fs.existsSync(`${base}/maps/map${map.id}.AUBREY`)) {
-            handler.log(
-                `Could not teleport to "${map.name}", because ${base}/maps/map${map.id}.AUBREY is missing.`,
-                "red"
-            );
-            return;
+        if (process.mainModule) {
+            const base = path.dirname(process.mainModule.filename);
+            if (!fs.existsSync(`${base}/maps/map${map.id}.AUBREY`)) {
+                handler.log(
+                    `Could not teleport to "${map.name}", because ${base}/maps/map${map.id}.AUBREY is missing.`,
+                    "red",
+                );
+                return;
+            }
         }
     } else if (!fs.existsSync(`./maps/Map${map.id}.json`)) {
         handler.log(
             `Could not teleport to "${map.name}", because ./maps/Map${map.id}.json is missing.`,
-            "red"
+            "red",
         );
         return;
     }
@@ -153,10 +158,7 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
 
 const onSuggestion = (args: string[]): string[] => {
     if (args.length === 2) {
-        if (namedMaps === null) {
-            namedMaps = getMapsbyName();
-        }
-        return namedMaps;
+        return getMapsbyName();
     }
     return [];
 };

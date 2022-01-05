@@ -4,36 +4,40 @@ import { findFromVariable } from "../utils";
 let namedTroops: string[] | null = null;
 
 const getTroopsByName = (): string[] => {
-    let result: string[] = [];
+    const result: string[] = [];
     for (let i = 0; i < $dataTroops.length; ++i) {
-        if ($dataTroops[i] !== null && $dataTroops[i].members.length > 0) {
+        if (
+            $dataTroops[i] !== null &&
+            $dataTroops[i].members.length > 0
+        ) {
             result.push($dataTroops[i].name);
         }
     }
     return result;
 };
 
-Game_Troop.prototype.addTroopReinforcementsWithRelativePosition = function (troopId: number, x: number, y: number): void {
-    let troop = $dataTroops[troopId];
-    for (let i = 0; i < troop.members.length; ++i) {
-        let member = troop.members[i];
-        if ($dataEnemies[member.enemyId]) {
-            let newX = member.x + x;
-            let newY = member.y + y;
-            let enemyId = member.enemyId;
-            let enemy = new Game_Enemy(enemyId, newX, newY);
-            enemy.setTroopId(troopId);
-            enemy.setTroopMemberId(i);
-            if (member.hidden) {
-                enemy.hide();
+Game_Troop.prototype.addTroopReinforcementsWithRelativePosition =
+    function (troopId: number, x: number, y: number): void {
+        const troop = $dataTroops[troopId];
+        for (let i = 0; i < troop.members.length; ++i) {
+            const member = troop.members[i];
+            if ($dataEnemies[member.enemyId]) {
+                const newX = member.x + x;
+                const newY = member.y + y;
+                const enemyId = member.enemyId;
+                const enemy = new Game_Enemy(enemyId, newX, newY);
+                enemy.setTroopId(troopId);
+                enemy.setTroopMemberId(i);
+                if (member.hidden) {
+                    enemy.hide();
+                }
+                this._enemies.push(enemy);
+                this._newEnemies.push(enemy);
             }
-            this._enemies.push(enemy);
-            this._newEnemies.push(enemy);
         }
-    }
-    this.makeUniqueNames();
-    BattleManager.refreshEnemyReinforcements();
-};
+        this.makeUniqueNames();
+        BattleManager.refreshEnemyReinforcements();
+    };
 
 const onCommand = (handler: CommandHandler, args: string[]): void => {
     // Check if argument passed
@@ -43,16 +47,20 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     }
 
     // Check if battle exists
-    let battle = findFromVariable($dataTroops, args[1]);
+    const battle = findFromVariable($dataTroops, args[1]);
     if (battle === null) {
         handler.log(`Battle "${args[1]}" not found`, "red");
         return;
     }
 
     if ($gameParty.inBattle()) {
-        let x = parseInt(args[2] || "0");
-        let y = parseInt(args[3] || "0");
-        $gameTroop.addTroopReinforcementsWithRelativePosition(battle.id, x, y);
+        const x = parseInt(args[2] || "0");
+        const y = parseInt(args[3] || "0");
+        $gameTroop.addTroopReinforcementsWithRelativePosition(
+            battle.id,
+            x,
+            y,
+        );
         handler.log(`${battle.name} joined the battle!`);
         return;
     }

@@ -13,9 +13,15 @@
     "devDependencies": {
         "@types/chrome": "^0.0.174",
         "@types/node": "^17.0.7",
+        "@typescript-eslint/eslint-plugin": "^5.9.0",
+        "@typescript-eslint/parser": "^5.9.0",
         "esbuild": "^0.14.10",
+        "eslint": "^8.6.0",
+        "eslint-config-prettier": "^8.3.0",
+        "eslint-plugin-prettier": "^4.0.0",
         "patch-package": "^6.4.7",
         "prettier": "^2.5.1",
-        "rpgmakermv_typescript_dts": "git+https://github.com/surrealegg/rpgmakermv_typescript_dts.git"
+        "rpgmakermv_typescript_dts": "git+https://github.com/surrealegg/rpgmakermv_typescript_dts.git",
+        "typescript": "^4.5.4"
     }
 }

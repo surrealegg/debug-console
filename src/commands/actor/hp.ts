@@ -3,7 +3,6 @@ import { findFromVariable, isValidInteger } from "../../utils";
 import { onSuggestionValue as onSuggestion } from "./utils";
 
 const onCommand = (handler: CommandHandler, args: string[]): void => {
-
     if (args.length < 3) {
         handler.log("Usage: /hp [name] [value]");
         return;
@@ -12,7 +11,7 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     const actor = findFromVariable(
         $gameParty.allMembers(),
         args[1],
-        "_characterName"
+        "_characterName",
     );
     if (actor === null) {
         handler.log(`Actor ${args[1]} not found`, "red");

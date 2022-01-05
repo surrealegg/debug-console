@@ -1,10 +1,10 @@
 import CommandHandler from "../../handler";
-import { findFromVariable } from "../../utils";
+import { findFromVariable, isValidInteger } from "../../utils";
 import { onSuggestionActive as onSuggestion } from "./utils";
 
 const onCommand = (handler: CommandHandler, args: string[]): void => {
-    if (args.length < 2) {
-        handler.log("Usage: /heal [name]");
+    if (args.length < 3) {
+        handler.log("Usage: /level [name] [value]");
         return;
     }
 
@@ -18,9 +18,13 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
         return;
     }
 
-    actor.setHp(actor.mhp);
-    actor.setMp(actor.mmp);
-    handler.log(`${actor._characterName} has been healed!`);
+    const value = parseInt(args[2]);
+    if (isValidInteger(value)) {
+        actor._level = value;
+        handler.log(`Set ${actor._characterName}'s MP to ${value}`);
+        return;
+    }
+    handler.log(`${value} is not a valid integer`, "red");
 };
 
 export default { onCommand, onSuggestion };

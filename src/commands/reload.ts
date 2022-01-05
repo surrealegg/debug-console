@@ -1,7 +1,6 @@
-const onCommand = () => {
-    chrome.runtime.reload();
+export default {
+    onCommand: () => {
+        chrome.runtime.reload();
+    },
+    onSuggestion: null,
 };
-
-const onSuggestion = null;
-
-export default { onCommand, onSuggestion };

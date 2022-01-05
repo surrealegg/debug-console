@@ -1,4 +1,4 @@
-var actors: string[] | null = null;
+let actors: string[] | null = null;
 
 const getActorsByName = (): string[] => {
     if (actors !== null) {
@@ -17,7 +17,7 @@ const getActorsByName = (): string[] => {
 };
 
 const getActiveActorsByName = (): string[] => {
-    let result: string[] = [];
+    const result: string[] = [];
     const activeMembers = $gameParty.allMembers();
     for (let i = 0; i < activeMembers.length; ++i) {
         result.push(activeMembers[i]._characterName);
@@ -44,6 +44,6 @@ const onSuggestionValue = (args: string[]): string[] => {
         return ["max"];
     }
     return onSuggestionActive(args);
-}
+};
 
 export { onSuggestion, onSuggestionValue, onSuggestionActive };

@@ -3,13 +3,16 @@ import { findFromVariable } from "../../utils";
 import { onSuggestionActive as onSuggestion } from "./utils";
 
 const onCommand = (handler: CommandHandler, args: string[]): void => {
-
     if (args.length < 2) {
         handler.log("Usage: /removeparty [name]");
         return;
     }
 
-    const actor = findFromVariable($dataActors, args[1], "characterName") as IDataActor | null;
+    const actor = findFromVariable(
+        $dataActors,
+        args[1],
+        "characterName",
+    ) as IDataActor | null;
     if (actor === null) {
         handler.log(`Actor ${args[1]} not found`, "red");
         return;
