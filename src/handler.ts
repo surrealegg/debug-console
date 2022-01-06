@@ -82,6 +82,7 @@ export default class CommandHandler {
                             e.target.selectionStart =
                                 e.target.selectionEnd =
                                     e.target.value.length;
+                            this.onInputUpdate(e.target.value);
                         }
                         break;
                     case "ArrowDown":
@@ -96,6 +97,7 @@ export default class CommandHandler {
                             e.target.selectionStart =
                                 e.target.selectionEnd =
                                     e.target.value.length;
+                            this.onInputUpdate(e.target.value);
                         }
                         break;
                     case "Tab":

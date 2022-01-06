@@ -13,12 +13,12 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
         return;
     }
     if (args.length === 2) {
-        handler.log(`${args[1]} = ${$gameVariables.value(variable)}`);
+        handler.log(`"${args[1]}" = ${$gameVariables.value(variable)}`);
         return;
     }
     $gameVariables.setValue(variable, args[2]);
     handler.log(
-        `${args[1]} is set to ${$gameVariables.value(variable)}`,
+        `"${args[1]}" is set to ${$gameVariables.value(variable)}`,
     );
 };
 
