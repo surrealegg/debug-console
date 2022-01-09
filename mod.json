@@ -4,13 +4,15 @@
     "name": "OMORI Debug Console",
     "description": "OMORI Debug Console",
     "manifestVersion": 1,
-    "version": "0.1.1",
+    "version": "0.2.0",
     "files": {
-        "plugins": ["CommandHandler.js", "CoreCommands.js"]
+        "plugins": [
+            "console.js"
+        ]
     },
     "asyncExec": [
         {
-            "file": "CommandHandler.js",
+            "file": "console.js",
             "runat": "pre_window_onload"
         }
     ]

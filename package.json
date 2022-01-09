@@ -4,10 +4,10 @@
     "description": "Debug Console for RPG Maker",
     "main": "index.js",
     "author": "surrealegg <surrealegg@pm.me>",
-    "license": "Apache License 2.0",
+    "license": "MPL-2.0",
     "private": false,
     "scripts": {
-        "build": "esbuild src/main.ts --target=es6 --bundle --external:fs --external:path --external:nw.gui --outfile=dist/Plugin.js",
+        "build": "node build.js",
         "postinstall": "patch-package"
     },
     "devDependencies": {
