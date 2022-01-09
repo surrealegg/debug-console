@@ -37,7 +37,7 @@ export default class CommandHandler {
         // Overwrite preventDefaults, because it cancles out input events.
         // TODO: There must be a better way to do this.
         Input._shouldPreventDefault = () => false;
-        if (KeyboardInput !== undefined) {
+        if (typeof KeyboardInput !== "undefined") {
             KeyboardInput._shouldPreventDefault = () => false;
         }
 
