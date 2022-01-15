@@ -14,6 +14,7 @@ import {
     Event,
     Switch,
     Variable,
+    Item,
 } from "./commands";
 
 declare global {
@@ -53,6 +54,7 @@ window.commands.add(
     Variable.onCommand,
     Variable.onSuggestion,
 );
+window.commands.add("item", Item.onCommand, Item.onSuggestion);
 
 Graphics.printFullError = function (
     name: string,

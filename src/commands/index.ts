@@ -8,6 +8,7 @@ import MapTP from "./maptp";
 import Event from "./event";
 import Switch from "./switch";
 import Variable from "./variable";
+import Item from "./item";
 
 export {
     AddParty,
@@ -24,4 +25,5 @@ export {
     Event,
     Switch,
     Variable,
+    Item,
 };
