@@ -9,6 +9,7 @@ import Event from "./event";
 import Switch from "./switch";
 import Variable from "./variable";
 import Item from "./item";
+import BGM from "./bgm";
 
 export {
     AddParty,
@@ -26,4 +27,5 @@ export {
     Switch,
     Variable,
     Item,
+    BGM,
 };

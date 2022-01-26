@@ -15,6 +15,7 @@ import {
     Switch,
     Variable,
     Item,
+    BGM,
 } from "./commands";
 
 declare global {
@@ -55,6 +56,7 @@ window.commands.add(
     Variable.onSuggestion,
 );
 window.commands.add("item", Item.onCommand, Item.onSuggestion);
+window.commands.add("bgm", BGM.onCommand, BGM.onSuggestion);
 
 Graphics.printFullError = function (
     name: string,
