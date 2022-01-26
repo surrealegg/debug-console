@@ -26,7 +26,7 @@ function getMapsbyName(): string[] {
         return namedMaps;
     }
     namedMaps = [];
-    for (let i = 0; i < $dataMapInfos.length; ++i) {
+    for (let i = 1; i < $dataMapInfos.length; ++i) {
         if ($dataMapInfos[i] !== null) {
             namedMaps.push($dataMapInfos[i].name);
         }

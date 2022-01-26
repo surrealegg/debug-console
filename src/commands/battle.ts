@@ -5,11 +5,8 @@ let namedTroops: string[] | null = null;
 
 const getTroopsByName = (): string[] => {
     const result: string[] = [];
-    for (let i = 0; i < $dataTroops.length; ++i) {
-        if (
-            $dataTroops[i] !== null &&
-            $dataTroops[i].members.length > 0
-        ) {
+    for (let i = 1; i < $dataTroops.length; ++i) {
+        if ($dataTroops[i].members.length > 0) {
             result.push($dataTroops[i].name);
         }
     }

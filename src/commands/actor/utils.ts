@@ -5,11 +5,8 @@ const getActorsByName = (): string[] => {
         return actors;
     }
     actors = [];
-    for (let i = 0; i < $dataActors.length; ++i) {
-        if (
-            $dataActors[i] !== null &&
-            $dataActors[i].characterName.length > 0
-        ) {
+    for (let i = 1; i < $dataActors.length; ++i) {
+        if ($dataActors[i].characterName.length > 0) {
             actors.push($dataActors[i].characterName);
         }
     }

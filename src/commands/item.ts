@@ -8,8 +8,8 @@ const getItemsByName = (): string[] => {
         return namedItems;
     }
     namedItems = [];
-    for (let i = 0; i < $dataItems.length; ++i) {
-        if ($dataItems[i] !== null && $dataItems[i].name.length > 0) {
+    for (let i = 1; i < $dataItems.length; ++i) {
+        if ($dataItems[i].name.length > 0) {
             // FIXME: Parser does not recognize escaped strings.
             const temp = $dataItems[i].name.replace('"', "'");
             namedItems.push(temp);

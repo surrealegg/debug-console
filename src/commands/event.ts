@@ -8,11 +8,8 @@ const getEventsByName = (): string[] => {
         return namedEvents;
     }
     namedEvents = [];
-    for (let i = 0; i < $dataCommonEvents.length; ++i) {
-        if (
-            $dataCommonEvents[i] !== null &&
-            $dataCommonEvents[i].name.length > 0
-        ) {
+    for (let i = 1; i < $dataCommonEvents.length; ++i) {
+        if ($dataCommonEvents[i].name.length > 0) {
             namedEvents.push($dataCommonEvents[i].name);
         }
     }
