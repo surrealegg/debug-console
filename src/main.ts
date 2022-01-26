@@ -16,6 +16,7 @@ import {
     Variable,
     Item,
     BGM,
+    Skill,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -51,6 +52,7 @@ window.commands.add(
 );
 window.commands.add("item", Item.onCommand, Item.onSuggestion);
 window.commands.add("bgm", BGM.onCommand, BGM.onSuggestion);
+window.commands.add("skill", Skill.onCommand, Skill.onSuggestion);
 
 Graphics.printFullError = function (
     name: string,

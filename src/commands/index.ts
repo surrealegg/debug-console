@@ -1,4 +1,4 @@
-import { AddParty, RemoveParty, Heal, Hp, Mp } from "./actor";
+import { AddParty, RemoveParty, Heal, Hp, Mp, Skill } from "./actor";
 import Battle from "./battle";
 import EndBattle from "./endbattle";
 import Reload from "./reload";
@@ -28,4 +28,5 @@ export {
     Variable,
     Item,
     BGM,
+    Skill,
 };
