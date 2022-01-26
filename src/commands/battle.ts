@@ -22,6 +22,7 @@ Game_Troop.prototype.addTroopReinforcementsWithRelativePosition =
                 const newX = member.x + x;
                 const newY = member.y + y;
                 const enemyId = member.enemyId;
+                // @ts-ignore
                 const enemy = new Game_Enemy(enemyId, newX, newY);
                 enemy.setTroopId(troopId);
                 enemy.setTroopMemberId(i);
@@ -33,6 +34,7 @@ Game_Troop.prototype.addTroopReinforcementsWithRelativePosition =
             }
         }
         this.makeUniqueNames();
+        // @ts-ignore
         BattleManager.refreshEnemyReinforcements();
     };
 
