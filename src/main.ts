@@ -18,12 +18,6 @@ import {
     BGM,
 } from "./commands";
 
-declare global {
-    interface Window {
-        commands: CommandHandler;
-    }
-}
-
 window.commands = window.commands || new CommandHandler();
 window.commands.add(
     "addparty",
