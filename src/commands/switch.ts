@@ -14,7 +14,8 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
     }
     if (args.length === 2) {
         handler.log(
-            `"${args[1]}" = ${$gameSwitches._data[id] === true ? "on" : "off"
+            `"${args[1]}" = ${
+                $gameSwitches._data[id] === true ? "on" : "off"
             }`,
         );
         return;

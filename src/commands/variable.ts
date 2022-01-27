@@ -18,7 +18,7 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
         );
         return;
     }
-    // @ts-ignore
+
     $gameVariables.setValue(variable, args[2]);
     handler.log(
         `"${args[1]}" is set to ${$gameVariables.value(variable)}`,

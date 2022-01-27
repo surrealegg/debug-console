@@ -18,7 +18,7 @@
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^4.0.0",
         "prettier": "^2.5.1",
-        "rpgmakermv_typescript_dts": "github:surrealegg/rpgmakermv_typescript_dts",
+        "rpgmakermv_typescript_dts": "github:surrealegg/rpgmakermv_typescript_dts#omori-console",
         "typescript": "^4.5.5"
     }
 }
