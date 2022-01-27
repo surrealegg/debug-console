@@ -2,7 +2,6 @@
     "name": "rpgmaker-console",
     "version": "0.2.0",
     "description": "Debug Console for RPG Maker",
-    "main": "index.js",
     "author": "surrealegg <surrealegg@pm.me>",
     "license": "MPL-2.0",
     "private": false,

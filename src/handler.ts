@@ -48,7 +48,6 @@ export default class CommandHandler {
         this.scrollableElement.classList.add("scrollable");
         this.actionInputElement.setAttribute("type", "text");
         this.actionInputElement.setAttribute("id", "console_input");
-        this.actionInputElement.setAttribute("autofocus", "true");
 
         // Add events
         this.actionInputElement.addEventListener(
