@@ -128,20 +128,13 @@ export default class CommandHandler {
                         const temp = this.parseArguments(
                             this.actionInputElement.value,
                         );
+
                         const tempValue =
                             this.currentSuggestions[
                                 this.currentSuggestionsIndex
                             ];
                         if (temp.length > 0) {
                             temp[temp.length - 1] = tempValue;
-                            for (let i = 0; i < temp.length; ++i) {
-                                if (
-                                    typeof temp[i] !== "undefined" &&
-                                    temp[i].indexOf(" ") > -1
-                                ) {
-                                    temp[i] = `"${temp[i]}"`;
-                                }
-                            }
                             this.actionInputElement.value =
                                 temp.join(" ");
                             break;
@@ -268,10 +261,7 @@ export default class CommandHandler {
     private updateSuggestions(): void {
         for (let i = 0; i < this.currentSuggestions.length; ++i) {
             const tempElement = document.createElement("span");
-            tempElement.innerText =
-                this.currentSuggestions[i].indexOf(" ") > -1
-                    ? `"${this.currentSuggestions[i]}"`
-                    : this.currentSuggestions[i];
+            tempElement.innerText = this.currentSuggestions[i];
             this.actionSuggestionElement.appendChild(tempElement);
         }
     }
@@ -362,20 +352,25 @@ export default class CommandHandler {
     }
 
     parseArguments(input: string): string[] {
-        const args = input.match(/("(\\\\"|[^"]|$)*("|$)|[^ ]+)/g);
-        if (args === null) {
-            return [];
-        }
-        for (let i = 0; i < args.length; ++i) {
-            if (args[i].charAt(0) === '"') {
-                const endQuote =
-                    args[i].charAt(args[i].length - 1) === '"'
-                        ? 1
-                        : 0;
-                args[i] = args[i].substring(
-                    1,
-                    args[i].length - endQuote,
-                );
+        const args: string[] = [];
+        const regex =
+            /((?<prefix>\d+):)?("(?<longValue>.*?)("|$)|(?<value>[^ ]+))/g;
+        let match: RegExpExecArray | null;
+        while ((match = regex.exec(input)) !== null) {
+            if (match.index === regex.lastIndex) {
+                regex.lastIndex++;
+            }
+            if (match.groups) {
+                let value = "";
+                if (match.groups.prefix) {
+                    value += match.groups.prefix + ":";
+                }
+                if (match.groups.longValue) {
+                    value += match.groups.longValue;
+                } else if (match.groups.value) {
+                    value += match.groups.value;
+                }
+                args.push(value);
             }
         }
         if (input.charAt(input.length - 1) === " ") {

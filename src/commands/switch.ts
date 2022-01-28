@@ -1,4 +1,5 @@
 import CommandHandler from "../handler";
+import { addQuotes } from "../utils";
 
 let namedSwitches: string[] | null = null;
 
@@ -28,12 +29,22 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
     handler.log(`"${args[1]}" is set to ${args[2]}`);
 };
 
+const getSwitchesByName = (): string[] => {
+    if (namedSwitches !== null) {
+        return namedSwitches;
+    }
+    namedSwitches = [];
+    for (let i = 0; i < $dataSystem.switches.length; ++i) {
+        if ($dataSystem.switches[i].length > 0) {
+            namedSwitches.push(addQuotes($dataSystem.switches[i]));
+        }
+    }
+    return namedSwitches;
+};
+
 const onSuggestion = (args: string[]): string[] => {
     if (args.length === 2) {
-        namedSwitches =
-            namedSwitches ||
-            $dataSystem.switches.filter((value) => value.length > 0);
-        return namedSwitches;
+        return getSwitchesByName();
     }
     if (args.length === 3) {
         return ["on", "off"];

@@ -1,5 +1,5 @@
 import CommandHandler from "../handler";
-import { findFromVariable } from "../utils";
+import { findFromVariable, mergeIDAndName } from "../utils";
 
 let namedEvents: string[] | null = null;
 
@@ -10,7 +10,12 @@ const getEventsByName = (): string[] => {
     namedEvents = [];
     for (let i = 1; i < $dataCommonEvents.length; ++i) {
         if ($dataCommonEvents[i].name.length > 0) {
-            namedEvents.push($dataCommonEvents[i].name);
+            namedEvents.push(
+                mergeIDAndName(
+                    $dataCommonEvents[i].id,
+                    $dataCommonEvents[i].name,
+                ),
+            );
         }
     }
     return namedEvents;

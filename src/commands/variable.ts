@@ -1,6 +1,20 @@
 import CommandHandler from "../handler";
+import { addQuotes } from "../utils";
 
 let namedVariables: string[] | null = null;
+
+const getVariablesByName = (): string[] => {
+    if (namedVariables !== null) {
+        return namedVariables;
+    }
+    namedVariables = [];
+    for (let i = 0; i < $dataSystem.variables.length; ++i) {
+        if ($dataSystem.variables[i].length > 0) {
+            namedVariables.push(addQuotes($dataSystem.variables[i]));
+        }
+    }
+    return namedVariables;
+};
 
 const onCommand = (handler: CommandHandler, args: string[]) => {
     if (args.length < 2) {
@@ -9,7 +23,7 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
     }
     const variable = $dataSystem.variables.indexOf(args[1]);
     if (variable === -1) {
-        handler.log(`${args[1]} not found.`);
+        handler.log(`"${args[1]}" not found.`);
         return;
     }
     if (args.length === 2) {
@@ -27,10 +41,7 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
 
 const onSuggestion = (args: string[]): string[] => {
     if (args.length === 2) {
-        namedVariables =
-            namedVariables ||
-            $dataSystem.variables.filter((value) => value.length > 0);
-        return namedVariables;
+        return getVariablesByName();
     }
     return [];
 };

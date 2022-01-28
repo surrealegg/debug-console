@@ -1,7 +1,7 @@
 import CommandHandler from "../handler";
 import fs = require("fs");
 import path = require("path");
-import { isValidInteger } from "../utils";
+import { addQuotes, isValidInteger } from "../utils";
 
 let namedBGM: string[] | null = null;
 const base = path.dirname(
@@ -14,7 +14,9 @@ const getBGMByName = (): string[] => {
     }
     namedBGM = [];
     fs.readdirSync(`${base}/audio/bgm`).forEach((file) => {
-        namedBGM?.push(file.substring(0, file.indexOf(".")));
+        namedBGM?.push(
+            addQuotes(file.substring(0, file.indexOf("."))),
+        );
     });
     return namedBGM;
 };
@@ -41,7 +43,6 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
         ? "ogg"
         : "rpgmvo";
     if (
-        namedBGM?.indexOf(args[1]) === -1 ||
         !fs.existsSync(`${base}/audio/bgm/${args[1]}.${bgmExension}`)
     ) {
         handler.log(`BGM ${args[1]} not found.`, "red");
@@ -49,7 +50,7 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     }
 
     handler.log(
-        `Playing ${args[1]} with volume ${volume} and pitch ${pitch}`,
+        `Playing "${args[1]}" with volume ${volume} and pitch ${pitch}`,
     );
     AudioManager.stopAll();
     AudioManager.playBgm(

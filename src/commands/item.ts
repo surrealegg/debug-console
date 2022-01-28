@@ -1,5 +1,9 @@
 import CommandHandler from "../handler";
-import { findFromVariable, isValidInteger } from "../utils";
+import {
+    addQuotes,
+    findFromVariable,
+    isValidInteger,
+} from "../utils";
 
 let namedItems: string[] | null = null;
 
@@ -12,7 +16,7 @@ const getItemsByName = (): string[] => {
         if ($dataItems[i].name.length > 0) {
             // FIXME: Parser does not recognize escaped strings.
             const temp = $dataItems[i].name.replace('"', "'");
-            namedItems.push(temp);
+            namedItems.push(addQuotes(temp));
         }
     }
     return namedItems;

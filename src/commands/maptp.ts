@@ -4,7 +4,7 @@ import CommandHandler from "../handler";
 
 let namedMaps: string[] | null = null;
 
-import { findFromVariable } from "../utils";
+import { addQuotes, findFromVariable } from "../utils";
 
 const tempSceneBaseInitialize = Scene_Base.prototype.initialize;
 Scene_Base.prototype.initialize = function () {
@@ -28,7 +28,7 @@ function getMapsbyName(): string[] {
     namedMaps = [];
     for (let i = 1; i < $dataMapInfos.length; ++i) {
         if ($dataMapInfos[i] !== null) {
-            namedMaps.push($dataMapInfos[i].name);
+            namedMaps.push(addQuotes($dataMapInfos[i].name));
         }
     }
     return namedMaps;

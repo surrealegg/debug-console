@@ -1,6 +1,9 @@
 import CommandHandler from "../../handler";
-import { findFromVariable, isValidInteger } from "../../utils";
-import { onSuggestionValue as onSuggestion } from "./utils";
+import { isValidInteger } from "../../utils";
+import {
+    findActiveActor,
+    onSuggestionValue as onSuggestion,
+} from "./utils";
 
 const onCommand = (handler: CommandHandler, args: string[]): void => {
     if (args.length < 3) {
@@ -8,11 +11,7 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
         return;
     }
 
-    const actor = findFromVariable(
-        $gameParty.allMembers(),
-        args[1],
-        "_characterName",
-    );
+    const actor = findActiveActor(args[1]);
     if (actor === null) {
         handler.log(`Actor ${args[1]} not found`, "red");
         return;

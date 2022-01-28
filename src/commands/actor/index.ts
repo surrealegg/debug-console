@@ -3,6 +3,7 @@ import RemoveParty from "./removeparty";
 import Heal from "./heal";
 import Hp from "./hp";
 import Mp from "./mp";
-import Skill from "./skill";
+import AddSkill from "./addskill";
+import RemoveSkill from "./removeskill";
 
-export { AddParty, RemoveParty, Heal, Hp, Mp, Skill };
+export { AddParty, RemoveParty, Heal, Hp, Mp, AddSkill, RemoveSkill };

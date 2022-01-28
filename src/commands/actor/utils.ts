@@ -1,3 +1,5 @@
+import { findFromVariable, mergeIDAndName } from "../../utils";
+
 let actors: string[] | null = null;
 
 const getActorsByName = (): string[] => {
@@ -7,17 +9,33 @@ const getActorsByName = (): string[] => {
     actors = [];
     for (let i = 1; i < $dataActors.length; ++i) {
         if ($dataActors[i].characterName.length > 0) {
-            actors.push($dataActors[i].characterName);
+            actors.push(
+                mergeIDAndName(i, $dataActors[i].characterName),
+            );
         }
     }
     return actors;
 };
 
+const findActiveActor = (name: string): Game_Actor | null => {
+    return findFromVariable(
+        $gameParty.allMembers(),
+        name,
+        "_characterName",
+        "_actorId",
+    );
+};
+
 const getActiveActorsByName = (): string[] => {
     const result: string[] = [];
-    const activeMembers = $gameParty.allMembers();
+    const activeMembers = $gameParty ? $gameParty.allMembers() : [];
     for (let i = 0; i < activeMembers.length; ++i) {
-        result.push(activeMembers[i]._characterName);
+        result.push(
+            mergeIDAndName(
+                activeMembers[i]._actorId,
+                activeMembers[i]._characterName,
+            ),
+        );
     }
     return result;
 };
@@ -43,4 +61,33 @@ const onSuggestionValue = (args: string[]): string[] => {
     return onSuggestionActive(args);
 };
 
-export { onSuggestion, onSuggestionValue, onSuggestionActive };
+const getActiveSkillsByName = (name: string): string[] => {
+    const result: string[] = [];
+    const actor = findActiveActor(name);
+    if (!actor) {
+        return result;
+    }
+
+    for (let i = 0; i < actor._equippedSkills.length; ++i) {
+        const id = actor._equippedSkills[i];
+        if (id > 0) {
+            result.push(
+                mergeIDAndName(
+                    id,
+                    $dataSkills[id]
+                        ? $dataSkills[id].name
+                        : "Unknown",
+                ),
+            );
+        }
+    }
+    return result;
+};
+
+export {
+    onSuggestion,
+    findActiveActor,
+    onSuggestionValue,
+    onSuggestionActive,
+    getActiveSkillsByName,
+};

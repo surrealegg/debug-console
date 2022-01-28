@@ -1,5 +1,5 @@
 import CommandHandler from "../handler";
-import { findFromVariable } from "../utils";
+import { addQuotes, findFromVariable } from "../utils";
 
 let namedTroops: string[] | null = null;
 
@@ -7,7 +7,7 @@ const getTroopsByName = (): string[] => {
     const result: string[] = [];
     for (let i = 1; i < $dataTroops.length; ++i) {
         if ($dataTroops[i].members.length > 0) {
-            result.push($dataTroops[i].name);
+            result.push(addQuotes($dataTroops[i].name));
         }
     }
     return result;
