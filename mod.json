@@ -4,7 +4,7 @@
     "name": "OMORI Debug Console",
     "description": "OMORI Debug Console",
     "manifestVersion": 1,
-    "version": "0.2.0",
+    "version": "0.3.0",
     "files": {
         "plugins": [
             "console.js"
