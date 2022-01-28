@@ -10,9 +10,9 @@ esbuild.build({
     bundle: true,
     target: "es6",
     external: ["fs", "path", "nw.gui"],
-    outfile: "dist/console.js",
+    outfile: "console/console.js",
 });
 
-fs.copyFile("./mod.json", "./dist/mod.json", (err) => {
+fs.copyFile("./mod.json", "./console/mod.json", (err) => {
     if (err) throw err;
 });
