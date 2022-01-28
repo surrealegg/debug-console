@@ -5,6 +5,9 @@
     "description": "OMORI Debug Console",
     "manifestVersion": 1,
     "version": "0.3.0",
+    "_flags": [
+        "prevent_disable"
+    ],
     "files": {
         "plugins": [
             "console.js"
