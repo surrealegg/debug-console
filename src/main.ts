@@ -20,6 +20,7 @@ import {
     RemoveSkill,
     HealAll,
     JS,
+    RestartBattle,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -71,6 +72,11 @@ window.commands.add(
     HealAll.onSuggestion,
 );
 window.commands.add("js", JS.onCommand, JS.onSuggestion);
+window.commands.add(
+    "restartbattle",
+    RestartBattle.onCommand,
+    RestartBattle.onSuggestion,
+);
 
 Graphics.printFullError = function (
     name: string,

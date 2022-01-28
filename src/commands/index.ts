@@ -20,6 +20,7 @@ import Variable from "./variable";
 import Item from "./item";
 import BGM from "./bgm";
 import JS from "./js";
+import RestartBattle from "./restartbattle";
 
 export {
     AddParty,
@@ -42,4 +43,5 @@ export {
     RemoveSkill,
     HealAll,
     JS,
+    RestartBattle,
 };
