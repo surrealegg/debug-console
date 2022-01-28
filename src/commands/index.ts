@@ -6,6 +6,7 @@ import {
     Mp,
     AddSkill,
     RemoveSkill,
+    HealAll,
 } from "./actor";
 import Battle from "./battle";
 import EndBattle from "./endbattle";
@@ -38,4 +39,5 @@ export {
     BGM,
     AddSkill,
     RemoveSkill,
+    HealAll,
 };

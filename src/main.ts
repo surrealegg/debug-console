@@ -18,6 +18,7 @@ import {
     BGM,
     AddSkill,
     RemoveSkill,
+    HealAll,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -62,6 +63,11 @@ window.commands.add(
     "removeskill",
     RemoveSkill.onCommand,
     RemoveSkill.onSuggestion,
+);
+window.commands.add(
+    "healall",
+    HealAll.onCommand,
+    HealAll.onSuggestion,
 );
 
 Graphics.printFullError = function (
