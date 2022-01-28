@@ -2,7 +2,7 @@ lockfileVersion: 5.3
 
 specifiers:
   '@types/chrome': ^0.0.174
-  '@types/node': ^17.0.12
+  '@types/node': ^17.0.13
   '@typescript-eslint/eslint-plugin': ^5.10.1
   '@typescript-eslint/parser': ^5.10.1
   esbuild: ^0.14.14
@@ -15,7 +15,7 @@ specifiers:
 
 devDependencies:
   '@types/chrome': 0.0.174
-  '@types/node': 17.0.12
+  '@types/node': 17.0.13
   '@typescript-eslint/eslint-plugin': 5.10.1_0f442f6b60390429061d5d9b6bcaaba6
   '@typescript-eslint/parser': 5.10.1_eslint@8.7.0+typescript@4.5.5
   esbuild: 0.14.14
@@ -23,7 +23,7 @@ devDependencies:
   eslint-config-prettier: 8.3.0_eslint@8.7.0
   eslint-plugin-prettier: 4.0.0_4660519532e4c3b0a9e5bb6623cfedf6
   prettier: 2.5.1
-  rpgmakermv_typescript_dts: github.com/surrealegg/rpgmakermv_typescript_dts/e712644932889c5176b91a608bda2816a25a803c
+  rpgmakermv_typescript_dts: github.com/surrealegg/rpgmakermv_typescript_dts/45b6a6416ba444b94b0443265e03d6593e5590a5
   typescript: 4.5.5
 
 packages:
@@ -106,8 +106,8 @@ packages:
     resolution: {integrity: sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==}
     dev: true
 
-  /@types/node/17.0.12:
-    resolution: {integrity: sha512-4YpbAsnJXWYK/fpTVFlMIcUIho2AYCi4wg5aNPrG1ng7fn/1/RZfCIpRCiBX+12RVa34RluilnvCqD+g3KiSiA==}
+  /@types/node/17.0.13:
+    resolution: {integrity: sha512-Y86MAxASe25hNzlDbsviXl8jQHb0RDvKt4c40ZJQ1Don0AAL0STLZSs4N+6gLEO55pedy7r2cLwS+ZDxPm/2Bw==}
     dev: true
 
   /@types/pixi.js/4.5.4:
@@ -1148,8 +1148,8 @@ packages:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
     dev: true
 
-  github.com/surrealegg/rpgmakermv_typescript_dts/e712644932889c5176b91a608bda2816a25a803c:
-    resolution: {tarball: https://codeload.github.com/surrealegg/rpgmakermv_typescript_dts/tar.gz/e712644932889c5176b91a608bda2816a25a803c}
+  github.com/surrealegg/rpgmakermv_typescript_dts/45b6a6416ba444b94b0443265e03d6593e5590a5:
+    resolution: {tarball: https://codeload.github.com/surrealegg/rpgmakermv_typescript_dts/tar.gz/45b6a6416ba444b94b0443265e03d6593e5590a5}
     name: rpgmakermv_typescript_dts
     version: 1.5.2
     dependencies:
