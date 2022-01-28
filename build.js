@@ -4,6 +4,10 @@
 const esbuild = require("esbuild");
 const fs = require("fs");
 
+if (!fs.existsSync("./console")) {
+    fs.mkdirSync("./console");
+}
+
 esbuild.build({
     logLevel: "info",
     entryPoints: ["./src/main.ts"],
