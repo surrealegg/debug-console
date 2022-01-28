@@ -205,6 +205,7 @@ export default class CommandHandler {
 
         .console li {
           margin-bottom: 0.25rem;
+          white-space: pre-wrap;
         }
 
         .console #console_input {
@@ -383,6 +384,14 @@ export default class CommandHandler {
     }
 
     execute(command: string): void {
+        if (command.indexOf("js") === 0) {
+            if (!("js" in this.commands)) {
+                this.log("Command not found.", "red");
+                return;
+            }
+            this.commands["js"](this, command.split(" "));
+            return;
+        }
         const args = this.parseArguments(command);
         if (args.length === 0 || !(args[0] in this.commands)) {
             this.log("Command not found.", "red");

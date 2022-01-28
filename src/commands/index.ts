@@ -19,6 +19,7 @@ import Switch from "./switch";
 import Variable from "./variable";
 import Item from "./item";
 import BGM from "./bgm";
+import JS from "./js";
 
 export {
     AddParty,
@@ -40,4 +41,5 @@ export {
     AddSkill,
     RemoveSkill,
     HealAll,
+    JS,
 };

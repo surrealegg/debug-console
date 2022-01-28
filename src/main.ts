@@ -19,6 +19,7 @@ import {
     AddSkill,
     RemoveSkill,
     HealAll,
+    JS,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -69,6 +70,7 @@ window.commands.add(
     HealAll.onCommand,
     HealAll.onSuggestion,
 );
+window.commands.add("js", JS.onCommand, JS.onSuggestion);
 
 Graphics.printFullError = function (
     name: string,
