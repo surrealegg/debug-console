@@ -127,6 +127,7 @@ export default class CommandHandler {
                         }
                         const temp = this.parseArguments(
                             this.actionInputElement.value,
+                            true,
                         );
 
                         const tempValue =
@@ -351,7 +352,7 @@ export default class CommandHandler {
         return true;
     }
 
-    parseArguments(input: string): string[] {
+    parseArguments(input: string, needsQuotes = false): string[] {
         const args: string[] = [];
         const regex =
             /((?<prefix>\d+):)?("(?<longValue>.*?)("|$)|(?<value>[^ ]+))/g;
@@ -366,7 +367,9 @@ export default class CommandHandler {
                     value += match.groups.prefix + ":";
                 }
                 if (match.groups.longValue) {
-                    value += match.groups.longValue;
+                    value += needsQuotes
+                        ? `"${match.groups.longValue}"`
+                        : match.groups.longValue;
                 } else if (match.groups.value) {
                     value += match.groups.value;
                 }
