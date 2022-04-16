@@ -21,6 +21,8 @@ import {
     HealAll,
     JS,
     RestartBattle,
+    Save,
+    Load,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -77,6 +79,8 @@ window.commands.add(
     RestartBattle.onCommand,
     RestartBattle.onSuggestion,
 );
+window.commands.add("save", Save.onCommand, Save.onSuggestion);
+window.commands.add("load", Load.onCommand, Load.onSuggestion);
 
 Graphics.printFullError = function (
     name: string,

@@ -21,6 +21,8 @@ import Item from "./item";
 import BGM from "./bgm";
 import JS from "./js";
 import RestartBattle from "./restartbattle";
+import Save from "./save";
+import Load from "./load";
 
 export {
     AddParty,
@@ -44,4 +46,6 @@ export {
     HealAll,
     JS,
     RestartBattle,
+    Save,
+    Load,
 };
