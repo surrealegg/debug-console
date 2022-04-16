@@ -23,6 +23,7 @@ import {
     RestartBattle,
     Save,
     Load,
+    SFX,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -81,6 +82,7 @@ window.commands.add(
 );
 window.commands.add("save", Save.onCommand, Save.onSuggestion);
 window.commands.add("load", Load.onCommand, Load.onSuggestion);
+window.commands.add("sfx", SFX.onCommand, SFX.onSuggestion);
 
 Graphics.printFullError = function (
     name: string,

@@ -23,6 +23,7 @@ import JS from "./js";
 import RestartBattle from "./restartbattle";
 import Save from "./save";
 import Load from "./load";
+import SFX from "./sfx";
 
 export {
     AddParty,
@@ -48,4 +49,5 @@ export {
     RestartBattle,
     Save,
     Load,
+    SFX,
 };
