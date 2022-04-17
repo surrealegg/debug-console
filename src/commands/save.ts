@@ -11,8 +11,8 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
         return;
     }
 
-    if (id > 6) {
-        handler.log("ID should not be greater than 6", "red");
+    if (id < 1 || id > 6) {
+        handler.log("Invalid Save ID", "red");
         return;
     }
 
