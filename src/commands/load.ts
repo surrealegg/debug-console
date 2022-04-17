@@ -9,7 +9,7 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
     const id = parseInt(args[1]);
 
     if (isNaN(id)) {
-        handler.log("Expected number", "red");
+        handler.log("Expected a number", "red");
         return;
     }
 
