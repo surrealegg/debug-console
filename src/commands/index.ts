@@ -25,6 +25,7 @@ import Save from "./save";
 import Load from "./load";
 import SFX from "./sfx";
 import Noclip from "./noclip";
+import Speed from "./speed";
 
 export {
     AddParty,
@@ -52,4 +53,5 @@ export {
     Load,
     SFX,
     Noclip,
+    Speed,
 };
