@@ -24,6 +24,7 @@ import {
     Save,
     Load,
     SFX,
+    Noclip,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -83,6 +84,7 @@ window.commands.add(
 window.commands.add("save", Save.onCommand, Save.onSuggestion);
 window.commands.add("load", Load.onCommand, Load.onSuggestion);
 window.commands.add("sfx", SFX.onCommand, SFX.onSuggestion);
+window.commands.add("noclip", Noclip.onCommand, Noclip.onSuggestion);
 
 Graphics.printFullError = function (
     name: string,

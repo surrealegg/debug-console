@@ -24,6 +24,7 @@ import RestartBattle from "./restartbattle";
 import Save from "./save";
 import Load from "./load";
 import SFX from "./sfx";
+import Noclip from "./noclip";
 
 export {
     AddParty,
@@ -50,4 +51,5 @@ export {
     Save,
     Load,
     SFX,
+    Noclip,
 };
