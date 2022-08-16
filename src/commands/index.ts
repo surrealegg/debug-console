@@ -26,6 +26,7 @@ import Load from "./load";
 import SFX from "./sfx";
 import Noclip from "./noclip";
 import Speed from "./speed";
+import EventInfo from "./eventinfo";
 
 export {
     AddParty,
@@ -54,4 +55,5 @@ export {
     SFX,
     Noclip,
     Speed,
+    EventInfo,
 };

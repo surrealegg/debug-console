@@ -26,6 +26,7 @@ import {
     SFX,
     Noclip,
     Speed,
+    EventInfo,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -87,6 +88,11 @@ window.commands.add("load", Load.onCommand, Load.onSuggestion);
 window.commands.add("sfx", SFX.onCommand, SFX.onSuggestion);
 window.commands.add("noclip", Noclip.onCommand, Noclip.onSuggestion);
 window.commands.add("speed", Speed.onCommand, Speed.onSuggestion);
+window.commands.add(
+    "eventinfo",
+    EventInfo.onCommand,
+    EventInfo.onSuggestion,
+);
 
 Graphics.printFullError = function (
     name: string,
