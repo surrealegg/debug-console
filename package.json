@@ -9,16 +9,16 @@
         "build": "node build.js"
     },
     "devDependencies": {
-        "@types/chrome": "^0.0.193",
-        "@types/node": "^18.7.6",
-        "@typescript-eslint/eslint-plugin": "^5.33.1",
-        "@typescript-eslint/parser": "^5.33.1",
-        "esbuild": "^0.15.3",
-        "eslint": "^8.22.0",
-        "eslint-config-prettier": "^8.5.0",
-        "eslint-plugin-prettier": "^4.2.1",
-        "prettier": "^2.7.1",
+        "@types/chrome": "^0.0.243",
+        "@types/node": "^20.4.10",
+        "@typescript-eslint/eslint-plugin": "^6.3.0",
+        "@typescript-eslint/parser": "^6.3.0",
+        "esbuild": "^0.19.1",
+        "eslint": "^8.47.0",
+        "eslint-config-prettier": "^9.0.0",
+        "eslint-plugin-prettier": "^5.0.0",
+        "prettier": "^3.0.1",
         "rpgmakermv_typescript_dts": "github:surrealegg/rpgmakermv_typescript_dts#omori-console",
-        "typescript": "^4.7.4"
+        "typescript": "^5.1.6"
     }
 }
