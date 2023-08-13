@@ -154,6 +154,9 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
         $gamePlayer.processRouteEnd();
     } catch {}
 
+    // Clear fogs
+    $gameMap.clearMapFogs();
+
     // Closes a Message, if it's open.
     SceneManager._scene._messageWindow.terminateMessage();
 };

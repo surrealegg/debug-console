@@ -12,4 +12,8 @@ declare global {
     interface Window {
         commands: CommandHandler;
     }
+
+    interface Game_Map {
+        clearMapFogs(): void;
+    }
 }
