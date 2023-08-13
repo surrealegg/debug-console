@@ -101,8 +101,10 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
         return;
     }
 
+    const isOnMenu = SceneManager._scene instanceof Scene_Menu;
+
     // Check if the player is in map
-    if (!SceneManager._scene._mapLoaded) {
+    if (!SceneManager._scene._mapLoaded && !isOnMenu) {
         handler.log("Player must be in map", "red");
         return;
     }
@@ -132,6 +134,10 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
             "red",
         );
         return;
+    }
+
+    if (isOnMenu) {
+        SceneManager.pop();
     }
 
     // Teleports to id
@@ -164,7 +170,9 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     $gameMap.clearMapFogs();
 
     // Closes a Message, if it's open.
-    SceneManager._scene._messageWindow.terminateMessage();
+    if (!isOnMenu) {
+        SceneManager._scene._messageWindow.terminateMessage();
+    }
 };
 
 const onSuggestion = (args: string[]): string[] => {
