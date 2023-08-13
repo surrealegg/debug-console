@@ -91,7 +91,13 @@ class TeleportScene extends Scene_Map {
 const onCommand = (handler: CommandHandler, args: string[]): void => {
     // Check if argument passed
     if (args.length < 2) {
-        handler.log("Usage: /maptp [id | name]");
+        const currentMap = $dataMapInfos[$gameMap._mapId];
+        if (!currentMap) {
+            handler.log("Unknown map", "red");
+            return;
+        }
+
+        handler.log(`Id: ${currentMap.id} Name: ${currentMap.name}`);
         return;
     }
 

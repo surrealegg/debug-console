@@ -13,7 +13,6 @@ import EndBattle from "./endbattle";
 import Reload from "./reload";
 import Clear from "./clear";
 import Font from "./font";
-import MapTP from "./maptp";
 import Event from "./event";
 import Switch from "./switch";
 import Variable from "./variable";
@@ -27,6 +26,7 @@ import SFX from "./sfx";
 import Noclip from "./noclip";
 import Speed from "./speed";
 import EventInfo from "./eventinfo";
+import Map from "./map";
 
 export {
     AddParty,
@@ -37,7 +37,6 @@ export {
     Reload,
     Clear,
     Font,
-    MapTP,
     Battle,
     EndBattle,
     Event,
@@ -56,4 +55,5 @@ export {
     Noclip,
     Speed,
     EventInfo,
+    Map,
 };

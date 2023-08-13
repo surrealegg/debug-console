@@ -8,7 +8,6 @@ import {
     Reload,
     Clear,
     Font,
-    MapTP,
     Battle,
     EndBattle,
     Event,
@@ -27,6 +26,7 @@ import {
     Noclip,
     Speed,
     EventInfo,
+    Map,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -46,7 +46,6 @@ window.commands.add("mp", Mp.onCommand, Mp.onSuggestion);
 window.commands.add("reload", Reload.onCommand, Reload.onSuggestion);
 window.commands.add("clear", Clear.onCommand, Clear.onSuggestion);
 window.commands.add("font", Font.onCommand, Font.onSuggestion);
-window.commands.add("maptp", MapTP.onCommand, MapTP.onSuggestion);
 window.commands.add("battle", Battle.onCommand, Battle.onSuggestion);
 window.commands.add(
     "endbattle",
@@ -93,6 +92,21 @@ window.commands.add(
     EventInfo.onCommand,
     EventInfo.onSuggestion,
 );
+
+window.commands.add(
+    "maptp",
+    (handler, args) => {
+        handler.log(
+            'The "/maptp" command is deprecated in favor of "/map" and will be removed in the next release.',
+            "yellow",
+        );
+
+        Map.onCommand(handler, args);
+    },
+    Map.onSuggestion,
+);
+
+window.commands.add("map", Map.onCommand, Map.onSuggestion);
 
 Graphics.printFullError = function (
     name: string,
