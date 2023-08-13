@@ -150,7 +150,9 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     $gameMap._interpreter.clear();
 
     // Unlocks the Player.
-    $gamePlayer.processRouteEnd();
+    try {
+        $gamePlayer.processRouteEnd();
+    } catch {}
 
     // Closes a Message, if it's open.
     SceneManager._scene._messageWindow.terminateMessage();
