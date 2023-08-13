@@ -54,7 +54,16 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
                     );
                     $gamePlayer.requestMapReload();
                 }
-                $gameSystem.onAfterLoad();
+
+                try {
+                    $gameSystem.onAfterLoad();
+                } catch (e) {
+                    handler.log(
+                        `Warning: $gameSystem.onAfterLoad throwed an error:\n${e.stack}`,
+                        "yellow",
+                    );
+                }
+
                 SceneManager.push(Scene_Map);
             }
         }, 100);
