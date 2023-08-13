@@ -33,13 +33,10 @@ const onSuggestion = (args: string[]): string[] => {
     if (args.length === 2) {
         const values = [];
         for (let i = 1; i < $gameMap._events.length; ++i)
-            if ($gameMap._events[i])
-                values.push(
-                    mergeIDAndName(
-                        i,
-                        $gameMap._events[i].characterName(),
-                    ),
-                );
+            if ($gameMap._events[i]) {
+                const inner = $gameMap._events[i].event();
+                values.push(mergeIDAndName(i, inner.name));
+            }
 
         return values;
     }
