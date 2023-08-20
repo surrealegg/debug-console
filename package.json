@@ -6,7 +6,7 @@
     "license": "MPL-2.0",
     "private": false,
     "scripts": {
-        "build": "esbuild ./src/main.ts --outfile=./console/console.js --bundle --target=es6 --external:fs --external:path --external:nw.gui",
+        "build": "esbuild ./src/main.ts --outfile=./console/console.js --bundle --target=es6,chrome65 --external:fs --external:path --external:nw.gui",
         "dev": "pnpm run build --watch"
     },
     "devDependencies": {
