@@ -95,18 +95,8 @@ window.commands.add(
     EventInfo.onSuggestion,
 );
 
-window.commands.add(
-    "maptp",
-    (handler, args) => {
-        handler.log(
-            'The "/maptp" command is deprecated in favor of "/map" and will be removed in the next release.',
-            "yellow",
-        );
-
-        Map.onCommand(handler, args);
-    },
-    Map.onSuggestion,
-);
+// Alias
+window.commands.add("maptp", Map.onCommand, Map.onSuggestion);
 
 window.commands.add("map", Map.onCommand, Map.onSuggestion);
 
