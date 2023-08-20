@@ -7,6 +7,7 @@ import {
     AddSkill,
     RemoveSkill,
     HealAll,
+    Stats,
 } from "./actor";
 import Battle from "./battle";
 import EndBattle from "./endbattle";
@@ -29,6 +30,7 @@ import EventInfo from "./eventinfo";
 import Map from "./map";
 
 export {
+    Stats,
     AddParty,
     RemoveParty,
     Heal,

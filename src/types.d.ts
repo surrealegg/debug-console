@@ -16,4 +16,14 @@ declare global {
     interface Game_Map {
         clearMapFogs(): void;
     }
+
+    interface Game_BattlerBase {
+        _extraTraits: IDataTrait[];
+
+        setExtraTrait(
+            code: number,
+            dataId: number,
+            value: number,
+        ): void;
+    }
 }

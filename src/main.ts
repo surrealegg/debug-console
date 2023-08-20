@@ -27,6 +27,7 @@ import {
     Speed,
     EventInfo,
     Map,
+    Stats,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -107,6 +108,8 @@ window.commands.add(
 );
 
 window.commands.add("map", Map.onCommand, Map.onSuggestion);
+
+window.commands.add("stats", Stats.onCommand, Stats.onSuggestion);
 
 Graphics.printFullError = function (
     name: string,
