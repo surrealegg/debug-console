@@ -26,4 +26,8 @@ declare global {
             value: number,
         ): void;
     }
+
+    interface Game_Party {
+        _stressEnergyCount: number;
+    }
 }

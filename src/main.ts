@@ -28,6 +28,7 @@ import {
     EventInfo,
     Map,
     Stats,
+    Energy,
 } from "./commands";
 
 window.commands = window.commands || new CommandHandler();
@@ -110,6 +111,8 @@ window.commands.add(
 window.commands.add("map", Map.onCommand, Map.onSuggestion);
 
 window.commands.add("stats", Stats.onCommand, Stats.onSuggestion);
+
+window.commands.add("energy", Energy.onCommand, Energy.onSuggestion);
 
 Graphics.printFullError = function (
     name: string,

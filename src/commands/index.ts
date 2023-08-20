@@ -28,6 +28,7 @@ import Noclip from "./noclip";
 import Speed from "./speed";
 import EventInfo from "./eventinfo";
 import Map from "./map";
+import Energy from "./energy";
 
 export {
     Stats,
@@ -58,4 +59,5 @@ export {
     Speed,
     EventInfo,
     Map,
+    Energy,
 };
