@@ -35,6 +35,10 @@ const addQuotes = (name: string): string => {
 };
 
 const mergeIDAndName = (id: number, name: string): string => {
+    if (name === "") {
+        return String(id);
+    }
+
     return `${id}:${addQuotes(name)}`;
 };
 
