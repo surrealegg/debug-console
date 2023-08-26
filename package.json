@@ -7,7 +7,8 @@
     "private": false,
     "scripts": {
         "build": "esbuild ./src/main.ts --outfile=./console/console.js --bundle --target=es6,chrome65 --external:fs --external:path --external:nw.gui",
-        "dev": "pnpm run build --watch"
+        "dev": "pnpm run build --watch",
+        "test": "vitest"
     },
     "devDependencies": {
         "@types/chrome": "^0.0.243",
@@ -20,6 +21,7 @@
         "eslint-plugin-prettier": "^5.0.0",
         "prettier": "^3.0.2",
         "rpgmakermv_typescript_dts": "github:surrealegg/rpgmakermv_typescript_dts#omori-console",
-        "typescript": "^5.1.6"
+        "typescript": "^5.1.6",
+        "vitest": "^0.34.3"
     }
 }

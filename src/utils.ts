@@ -25,7 +25,13 @@ const isValidInteger = (value: any): boolean => {
 };
 
 const addQuotes = (name: string): string => {
-    return name.indexOf(" ") > -1 ? `"${name}"` : name;
+    const hasSpaces = name.indexOf(" ") > -1;
+    const hasQuotes = name.startsWith('"') && name.endsWith('"');
+    if (hasSpaces && !hasQuotes) {
+        return `"${name}"`;
+    }
+
+    return name;
 };
 
 const mergeIDAndName = (id: number, name: string): string => {
