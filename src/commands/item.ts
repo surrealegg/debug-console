@@ -28,10 +28,7 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
         return;
     }
 
-    const item = findFromVariable(
-        $dataItems,
-        args[1],
-    ) as IDataItem | null;
+    const item = findFromVariable($dataItems, args[1], "name", "id");
     if (item === null) {
         handler.log(`Item ${args[1]} not found.`);
         return;

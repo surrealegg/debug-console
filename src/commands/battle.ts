@@ -46,7 +46,12 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     }
 
     // Check if battle exists
-    const battle = findFromVariable($dataTroops, args[1]);
+    const battle = findFromVariable(
+        $dataTroops,
+        args[1],
+        "name",
+        "id",
+    );
     if (battle === null) {
         handler.log(`Battle "${args[1]}" not found`, "red");
         return;

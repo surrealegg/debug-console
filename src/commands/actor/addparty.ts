@@ -15,7 +15,8 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
         $dataActors,
         args[1],
         "characterName",
-    ) as IDataActor | null;
+        "id",
+    );
     if (actor === null) {
         handler.log(`Actor ${args[1]} not found`, "red");
         return;

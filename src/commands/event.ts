@@ -31,7 +31,9 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
         $dataCommonEvents,
         args[1],
         "name",
-    ) as IDataCommonEvent | null;
+        "id",
+    );
+
     if (event === null) {
         handler.log(`Event "${args[1]}" not found.`);
         return;

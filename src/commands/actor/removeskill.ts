@@ -22,7 +22,8 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
         $dataSkills,
         args[2],
         "name",
-    ) as IDataSkill | null;
+        "id",
+    );
     if (skill === null) {
         handler.log(`Skill "${args[2]}" not found`, "red");
         return;

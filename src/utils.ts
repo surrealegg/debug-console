@@ -1,11 +1,9 @@
-/* eslint-disable  @typescript-eslint/no-explicit-any */
-
-const findFromVariable = (
-    dest: any[],
+const findFromVariable = <T extends object>(
+    dest: T[],
     value: string,
-    name = "name",
-    id = "id",
-): any | null => {
+    name: keyof T,
+    id: keyof T,
+): T | null => {
     const parsedValue = parseInt(value);
     const numeric = isValidInteger(parsedValue);
     for (let i = 0; i < dest.length; ++i) {
@@ -20,7 +18,7 @@ const findFromVariable = (
     return null;
 };
 
-const isValidInteger = (value: any): boolean => {
+const isValidInteger = (value: number): boolean => {
     return !isNaN(value) && isFinite(value);
 };
 

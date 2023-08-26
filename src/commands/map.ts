@@ -110,7 +110,12 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     }
 
     // Check if map exists
-    const map = findFromVariable($dataMapInfos, args[1]);
+    const map = findFromVariable(
+        $dataMapInfos,
+        args[1],
+        "name",
+        "id",
+    );
     if (map === null) {
         handler.log(`Map "${args[1]}" not found`, "red");
         return;
