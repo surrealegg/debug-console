@@ -1,5 +1,5 @@
 import CommandHandler from "../handler";
-import { isValidInteger } from "../utils";
+import { isValidNumber } from "../utils";
 
 declare let Galv: {
     ASPLASH: { splashed: boolean };
@@ -13,7 +13,7 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
 
     const id = parseInt(args[1]);
 
-    if (!isValidInteger(id)) {
+    if (!isValidNumber(id)) {
         handler.log("Expected a number", "red");
         return;
     }

@@ -1,5 +1,5 @@
 import CommandHandler from "../../handler";
-import { isValidInteger } from "../../utils";
+import { isValidNumber } from "../../utils";
 import {
     findActiveActor,
     onSuggestionActive as onSuggestion,
@@ -18,7 +18,7 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     }
 
     const value = parseInt(args[2]);
-    if (isValidInteger(value)) {
+    if (isValidNumber(value)) {
         actor._level = value;
         handler.log(`Set ${actor._characterName}'s MP to ${value}`);
         return;

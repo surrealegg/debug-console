@@ -1,9 +1,5 @@
 import CommandHandler from "../handler";
-import {
-    addQuotes,
-    findFromVariable,
-    isValidInteger,
-} from "../utils";
+import { addQuotes, findFromVariable, isValidNumber } from "../utils";
 
 let namedItems: string[] | null = null;
 
@@ -38,7 +34,7 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
         args[2] === "max"
             ? $gameParty.maxItems(item)
             : parseInt(args[2]);
-    if (isValidInteger(value)) {
+    if (isValidNumber(value)) {
         $gameParty.gainItem(item, value, false);
         handler.log(`Quantity of ${args[1]} is set to ${value}`);
         return;

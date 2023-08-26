@@ -1,5 +1,5 @@
 import CommandHandler from "../handler";
-import { isValidInteger } from "../utils";
+import { isValidNumber } from "../utils";
 
 export default {
     onCommand: (handler: CommandHandler, args: string[]) => {
@@ -12,7 +12,7 @@ export default {
         }
 
         const rawValue = parseInt(args[1]);
-        if (!isValidInteger(rawValue)) {
+        if (!isValidNumber(rawValue)) {
             handler.log("Expected a number between 0 to 10", "red");
             return;
         }

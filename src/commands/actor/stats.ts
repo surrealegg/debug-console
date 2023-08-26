@@ -1,5 +1,5 @@
 import CommandHandler from "../../handler";
-import { isValidInteger } from "../../utils";
+import { isValidNumber } from "../../utils";
 import { findActiveActor, onSuggestionActive } from "./utils";
 
 type Property = {
@@ -140,7 +140,7 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     }
 
     const value = parseInt(args[4]);
-    if (!isValidInteger(value)) {
+    if (!isValidNumber(value)) {
         handler.log("Expected a number", "red");
         return;
     }

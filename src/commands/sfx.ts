@@ -1,7 +1,7 @@
 import CommandHandler from "../handler";
 import fs = require("fs");
 import path = require("path");
-import { addQuotes, isValidInteger } from "../utils";
+import { addQuotes, isValidNumber } from "../utils";
 
 let namedBGM: string[] | null = null;
 const base = path.dirname(
@@ -32,10 +32,10 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
 
     let volume = parseInt(args[2]);
     let pitch = parseInt(args[3]);
-    if (!isValidInteger(volume)) {
+    if (!isValidNumber(volume)) {
         volume = 100;
     }
-    if (!isValidInteger(pitch)) {
+    if (!isValidNumber(pitch)) {
         pitch = 100;
     }
 

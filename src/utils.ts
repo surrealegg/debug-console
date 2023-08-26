@@ -5,7 +5,7 @@ const findFromVariable = <T extends object>(
     id: keyof T,
 ): T | null => {
     const parsedValue = parseInt(value);
-    const numeric = isValidInteger(parsedValue);
+    const numeric = isValidNumber(parsedValue);
     for (let i = 0; i < dest.length; ++i) {
         if (
             dest[i] !== null &&
@@ -18,7 +18,7 @@ const findFromVariable = <T extends object>(
     return null;
 };
 
-const isValidInteger = (value: number): boolean => {
+const isValidNumber = (value: number): boolean => {
     return !isNaN(value) && isFinite(value);
 };
 
@@ -40,9 +40,4 @@ const mergeIDAndName = (id: number, name: string): string => {
     return `${id}:${addQuotes(name)}`;
 };
 
-export {
-    addQuotes,
-    findFromVariable,
-    isValidInteger,
-    mergeIDAndName,
-};
+export { addQuotes, findFromVariable, isValidNumber, mergeIDAndName };

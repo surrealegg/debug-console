@@ -1,5 +1,5 @@
 import CommandHandler from "../handler";
-import { isValidInteger, mergeIDAndName } from "../utils";
+import { isValidNumber, mergeIDAndName } from "../utils";
 
 const onCommand = (handler: CommandHandler, args: string[]) => {
     if (args.length < 2) {
@@ -8,7 +8,7 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
     }
 
     const parsedValue = parseInt(args[1]);
-    if (!isValidInteger(parsedValue)) {
+    if (!isValidNumber(parsedValue)) {
         handler.log("Expected an integer", "red");
         return;
     }
