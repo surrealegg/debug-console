@@ -8,10 +8,6 @@ import CommandHandler, {
 export {};
 
 declare global {
-    const Imported: {
-        [plugin: string]: boolean;
-    };
-
     interface Window {
         commands: CommandHandler;
         __DEBUG_CONSOLE_PRELOADED_COMMANDS__?: {
@@ -21,6 +17,9 @@ declare global {
         }[];
         Galv: {
             ASPLASH: { splashed: boolean };
+        };
+        Imported: {
+            [plugin: string]: boolean;
         };
     }
 

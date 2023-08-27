@@ -133,7 +133,12 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
                 return;
             }
         }
-    } else if (!fs.existsSync(`./maps/Map${map.id}.json`)) {
+    } else if (
+        (window?.Imported?.YED_Tiled &&
+            !fs.existsSync(`./maps/Map${map.id}.json`)) ||
+        (!window?.Imported?.YED_Tiled &&
+            !fs.existsSync(`./data/Map${map.id.padZero(3)}.json`))
+    ) {
         handler.log(
             `Could not teleport to "${map.name}", because ./maps/Map${map.id}.json is missing.`,
             "red",
