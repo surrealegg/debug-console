@@ -1,4 +1,4 @@
-import CommandHandler from "../handler";
+import type CommandHandler from "../handler";
 import { findFromVariable, mergeIDAndName } from "../utils";
 
 let namedEvents: string[] | null = null;

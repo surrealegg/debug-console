@@ -1,4 +1,4 @@
-import CommandHandler from "../handler";
+import type CommandHandler from "../handler";
 import { isValidNumber, mergeIDAndName } from "../utils";
 
 const onCommand = (handler: CommandHandler, args: string[]) => {

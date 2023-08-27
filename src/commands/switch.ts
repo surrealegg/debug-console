@@ -1,4 +1,4 @@
-import CommandHandler from "../handler";
+import type CommandHandler from "../handler";
 import { addQuotes } from "../utils";
 
 let namedSwitches: string[] | null = null;

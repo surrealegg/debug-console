@@ -1,4 +1,4 @@
-import CommandHandler from "../handler";
+import type CommandHandler from "../handler";
 
 export default {
     onCommand: (handler: CommandHandler, args: string[]) => {

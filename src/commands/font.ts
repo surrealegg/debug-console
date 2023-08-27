@@ -1,4 +1,4 @@
-import CommandHandler from "../handler";
+import type CommandHandler from "../handler";
 
 const supportedFonts = ["monospace", "sans-serif", "GameFont"];
 

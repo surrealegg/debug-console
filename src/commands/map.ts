@@ -1,6 +1,6 @@
 import path = require("path");
 import fs = require("fs");
-import CommandHandler from "../handler";
+import type CommandHandler from "../handler";
 
 let namedMaps: string[] | null = null;
 

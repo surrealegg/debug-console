@@ -1,4 +1,4 @@
-import CommandHandler from "../handler";
+import type CommandHandler from "../handler";
 import fs = require("fs");
 import path = require("path");
 import { addQuotes, isValidNumber } from "../utils";

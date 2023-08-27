@@ -1,4 +1,4 @@
-import CommandHandler from "../handler";
+import type CommandHandler from "../handler";
 import { addQuotes, findFromVariable, isValidNumber } from "../utils";
 
 let namedItems: string[] | null = null;

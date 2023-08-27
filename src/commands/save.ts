@@ -1,4 +1,4 @@
-import CommandHandler from "../handler";
+import type CommandHandler from "../handler";
 
 const onCommand = (handler: CommandHandler, args: string[]) => {
     const id =
