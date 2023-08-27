@@ -4,6 +4,10 @@ import RemoveParty from "./commands/actor/removeparty";
 import Heal from "./commands/actor/heal";
 import Hp from "./commands/actor/hp";
 import Mp from "./commands/actor/mp";
+import AddSkill from "./commands/actor/addskill";
+import RemoveSkill from "./commands/actor/removeskill";
+import HealAll from "./commands/actor/healall";
+import Stats from "./commands/actor/stats";
 import Reload from "./commands/reload";
 import Clear from "./commands/clear";
 import Font from "./commands/font";
@@ -14,9 +18,6 @@ import Switch from "./commands/switch";
 import Variable from "./commands/variable";
 import Item from "./commands/item";
 import BGM from "./commands/bgm";
-import AddSkill from "./commands/actor/addskill";
-import RemoveSkill from "./commands/actor/removeskill";
-import HealAll from "./commands/actor/healall";
 import JS from "./commands/js";
 import RestartBattle from "./commands/restartbattle";
 import Save from "./commands/save";
@@ -26,11 +27,20 @@ import Noclip from "./commands/noclip";
 import Speed from "./commands/speed";
 import EventInfo from "./commands/eventinfo";
 import Map from "./commands/map";
-import Stats from "./commands/actor/stats";
 import Energy from "./commands/energy";
 
 if (!(window.commands && window.commands.isLoaded)) {
     window.commands = new CommandHandler();
+
+    Graphics.printFullError = function (
+        name: string,
+        message: string,
+        stack: string,
+    ): void {
+        window.commands.setConsole(true);
+        window.commands.log(`${name} ${message}\n${stack}`, "red");
+        window.commands.log("if the game can't recover run /reload");
+    };
 }
 
 window.commands.add(
@@ -104,13 +114,3 @@ window.commands.add("map", Map.onCommand, Map.onSuggestion);
 window.commands.add("stats", Stats.onCommand, Stats.onSuggestion);
 
 window.commands.add("energy", Energy.onCommand, Energy.onSuggestion);
-
-Graphics.printFullError = function (
-    name: string,
-    message: string,
-    stack: string,
-): void {
-    window.commands.setConsole(true);
-    window.commands.log(`${name} ${message}\n${stack}`, "red");
-    window.commands.log("if the game can't recover run /reload");
-};
