@@ -236,7 +236,7 @@ export default class CommandHandler {
         document.head.appendChild(styleElement);
 
         // Add Toggle event.
-        document.addEventListener("keydown", (e) => {
+        document.addEventListener("keyup", (e) => {
             if (
                 (e.code === "Escape" && this.active === true) ||
                 (e.code === "Slash" && this.active === false)
