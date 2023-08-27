@@ -1,10 +1,6 @@
 import type CommandHandler from "../handler";
 import { isValidNumber } from "../utils";
 
-declare let Galv: {
-    ASPLASH: { splashed: boolean };
-};
-
 const onCommand = (handler: CommandHandler, args: string[]) => {
     if (args.length < 2) {
         handler.log("/load [saveid]");
@@ -20,7 +16,7 @@ const onCommand = (handler: CommandHandler, args: string[]) => {
 
     // Check whenever splash screen is played, because
     // It will go back to the splash screen if it's not finished.
-    if (!Galv.ASPLASH.splashed) {
+    if (window?.Galv?.ASPLASH?.splashed === false) {
         handler.log(
             "Can not load a save file during splash screen.",
             "red",

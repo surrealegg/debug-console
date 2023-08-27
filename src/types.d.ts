@@ -19,6 +19,9 @@ declare global {
             onCommand: CommandHandlerOnCommand;
             onSuggestion: CommandHandlerOnSuggestion | null;
         }[];
+        Galv: {
+            ASPLASH: { splashed: boolean };
+        };
     }
 
     interface Game_Map {

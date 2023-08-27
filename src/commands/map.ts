@@ -172,7 +172,9 @@ const onCommand = (handler: CommandHandler, args: string[]): void => {
     } catch {}
 
     // Clear fogs
-    $gameMap.clearMapFogs();
+    if (typeof $gameMap.clearMapFogs === "function") {
+        $gameMap.clearMapFogs();
+    }
 
     // Closes a Message, if it's open.
     if (!isOnMenu) {
