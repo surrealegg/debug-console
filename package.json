@@ -1,6 +1,6 @@
 {
     "name": "rpgmaker-console",
-    "version": "0.4.0",
+    "version": "0.6.0",
     "description": "Debug Console for RPG Maker",
     "author": "surrealegg <surrealegg@pm.me>",
     "license": "MPL-2.0",

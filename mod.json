@@ -4,14 +4,10 @@
     "name": "OMORI Debug Console",
     "description": "OMORI Debug Console",
     "manifestVersion": 1,
-    "version": "0.5.0",
-    "_flags": [
-        "prevent_disable"
-    ],
+    "version": "0.6.0",
+    "_flags": ["prevent_disable"],
     "files": {
-        "plugins": [
-            "console.js"
-        ]
+        "plugins": ["console.js"]
     },
     "asyncExec": [
         {
