@@ -1,6 +1,9 @@
 /// <reference types="rpgmakermv_typescript_dts" />
 
-import CommandHandler from "./handler";
+import CommandHandler, {
+    CommandHandlerOnCommand,
+    CommandHandlerOnSuggestion,
+} from "./handler";
 
 export {};
 
@@ -11,6 +14,11 @@ declare global {
 
     interface Window {
         commands: CommandHandler;
+        __DEBUG_CONSOLE_PRELOADED_COMMANDS__?: {
+            name: string;
+            onCommand: CommandHandlerOnCommand;
+            onSuggestion: CommandHandlerOnSuggestion | null;
+        }[];
     }
 
     interface Game_Map {

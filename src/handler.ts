@@ -1,18 +1,18 @@
 declare let KeyboardInput: { _shouldPreventDefault: () => void };
 
-interface CommandHandlerOnCommand {
+export interface CommandHandlerOnCommand {
     (handler: CommandHandler, args: string[]): void;
 }
 
-interface CommandHandlerOnCommandArray {
+export interface CommandHandlerOnCommandArray {
     [name: string]: CommandHandlerOnCommand;
 }
 
-interface CommandHandlerOnSuggestion {
+export interface CommandHandlerOnSuggestion {
     (args: string[]): string[];
 }
 
-interface CommandHandlerOnSuggestionArray {
+export interface CommandHandlerOnSuggestionArray {
     [name: string]: CommandHandlerOnSuggestion;
 }
 
@@ -32,6 +32,8 @@ export default class CommandHandler {
     public actionInputPrefixElement = document.createElement("span");
     public actionSuggestionElement = document.createElement("p");
     public actionInputElement = document.createElement("input");
+
+    public readonly isLoaded = true;
 
     constructor() {
         // Overwrite preventDefaults, because it cancles out input events.
@@ -259,6 +261,18 @@ export default class CommandHandler {
         this.log(
             `Welcome to ${document.title} console! Press ESC to close it`,
         );
+
+        if (
+            Array.isArray(window.__DEBUG_CONSOLE_PRELOADED_COMMANDS__)
+        ) {
+            for (const command of window.__DEBUG_CONSOLE_PRELOADED_COMMANDS__) {
+                this.add(
+                    command.name,
+                    command.onCommand,
+                    command.onSuggestion,
+                );
+            }
+        }
     }
 
     private updateSuggestions(): void {

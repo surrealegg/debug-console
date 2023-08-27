@@ -31,7 +31,10 @@ import {
     Energy,
 } from "./commands";
 
-window.commands = window.commands || new CommandHandler();
+if (!(window.commands && window.commands.isLoaded)) {
+    window.commands = new CommandHandler();
+}
+
 window.commands.add(
     "addparty",
     AddParty.onCommand,
